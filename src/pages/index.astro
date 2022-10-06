@@ -44,11 +44,11 @@ import MainLayout from "../layouts/MainLayout.astro";
 
   .tool-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
     justify-items: center;
 
     li {
-      min-width: 400px;
+      min-width: clamp(20ch, 50vw, 400px);
       padding: 1rem;
       text-align: center;
       background-color: var(--theme-card);
