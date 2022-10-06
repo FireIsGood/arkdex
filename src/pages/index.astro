@@ -3,21 +3,31 @@ import MainLayout from "../layouts/MainLayout.astro";
 ---
 
 <MainLayout title="Arkdex ▪ Home">
-  <h1>Arkdex</h1>
-  <p>A website by FireIsGood#0733. Created with Astro.</p>
-  <p>This is generic text</p>
-  <p>
-    <a href="">This is link text</a>
-  </p>
-  <p class="grey">This is grey text</p>
-  <hr />
-  <h2>Tools:</h2>
-  <ul class="tool-cards">
-    <li><a href="/arkdex/operators">Operators</a></li>
-  </ul>
+  <section style="opacity: 0">
+    <h1>Arkdex</h1>
+    <p>A website by FireIsGood#0733. Created with Astro.</p>
+    <p>This is generic text</p>
+    <p>
+      <a href="">This is link text</a>
+    </p>
+    <p class="grey">This is grey text</p>
+    <hr />
+    <h2>Tools:</h2>
+    <ul class="tool-cards">
+      <li><a href="/arkdex/operators">Operators</a></li>
+    </ul>
+  </section>
 </MainLayout>
 
 <style lang="scss">
+  // Fix FOUC
+
+  section {
+    opacity: 1 !important;
+  }
+
+  // General Styles
+
   * + * {
     margin-top: 1rem;
   }
@@ -25,6 +35,8 @@ import MainLayout from "../layouts/MainLayout.astro";
   h1 {
     text-align: center;
   }
+
+  // Main Styles
 
   .grey {
     color: var(--theme-text-grey);

@@ -32,7 +32,7 @@ await fetch(
 ---
 
 <MainLayout title="Arkdex ▪ Operators">
-  <section>
+  <section style="opacity: 0">
     <h1>Operators</h1>
     <ul class="operator-grid">
       {
@@ -63,6 +63,14 @@ await fetch(
 </MainLayout>
 
 <style lang="scss">
+  // Fix FOUC
+
+  section {
+    opacity: 1 !important;
+  }
+
+  // CSS Variables
+
   :root {
     // Arkinghts Rarities
 
