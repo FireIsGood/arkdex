@@ -62,7 +62,6 @@ await fetch(
   </section>
 </MainLayout>
 
-
 <style lang="scss">
   :root {
     // Arkinghts Rarities
@@ -121,10 +120,13 @@ await fetch(
     text-align: center;
   }
 
-  a,
-  a:visited {
-    color: var(--theme-text);
+  a {
     text-decoration: none;
+  }
+
+  a .operator-name,
+  a .operator-name:visited {
+    color: var(--theme-text);
   }
 
   // Main Styles
