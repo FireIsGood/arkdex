@@ -2,6 +2,21 @@
 import MainLayout from "../layouts/MainLayout.astro";
 ---
 
+<MainLayout title="Arkdex ▪ Home">
+  <h1>Arkdex</h1>
+  <p>A website by FireIsGood#0733. Created with Astro.</p>
+  <p>This is generic text</p>
+  <p>
+    <a href="">This is link text</a>
+  </p>
+  <p class="grey">This is grey text</p>
+  <hr />
+  <h2>Tools:</h2>
+  <ul class="tool-cards">
+    <li><a href="/arkdex/operators">Operators</a></li>
+  </ul>
+</MainLayout>
+
 <style lang="scss">
   * + * {
     margin-top: 1rem;
@@ -28,18 +43,3 @@ import MainLayout from "../layouts/MainLayout.astro";
     }
   }
 </style>
-
-<MainLayout title="Arkdex ▪ Home">
-  <h1>Arkdex</h1>
-  <p>A website by FireIsGood#0733. Created with Astro.</p>
-  <p>This is generic text</p>
-  <p>
-    <a href="">This is link text</a>
-  </p>
-  <p class="grey">This is grey text</p>
-  <hr />
-  <h2>Tools:</h2>
-  <ul class="tool-cards">
-    <li><a href="/arkdex/operators">Operators</a></li>
-  </ul>
-</MainLayout>
