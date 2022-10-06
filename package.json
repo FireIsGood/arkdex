@@ -11,9 +11,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@swup/a11y-plugin": "^2.1.0",
     "astro": "^1.4.3"
   },
   "devDependencies": {
-    "sass": "^1.55.0"
+    "@swup/head-plugin": "^1.2.1",
+    "sass": "^1.55.0",
+    "swup": "^2.0.19"
   }
 }

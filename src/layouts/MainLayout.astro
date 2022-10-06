@@ -8,7 +8,8 @@ export interface Props {
 
 const { title, padding, ogImg, ogDesc } = Astro.props;
 
-const mainClass = padding === true || padding === undefined ? "pad" : "";
+let mainClass = padding === true || padding === undefined ? "pad" : "";
+mainClass += " transition-fade";
 const opegGraphImg = ogImg ? ogImg : "/arkdex/assets/logo_rhodes_bg.png";
 const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 ---
@@ -26,6 +27,18 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
       rel="stylesheet"
     />
+    <!-- Swup -->
+    <script>
+      import Swup from "swup";
+      import SwupA11yPlugin from "@swup/a11y-plugin";
+      import SwupHeadPlugin from "@swup/head-plugin";
+
+      const options = {
+        plugins: [new SwupHeadPlugin(), new SwupA11yPlugin()],
+      };
+
+      const swup = new Swup(options);
+    </script>
     <!-- HTML Meta Tags -->
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -185,6 +198,15 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         box-shadow: 0 0 8px rgba($color: #000000, $alpha: 0.2);
       }
 
+      .transition-fade {
+        transition: 0.2s ease-out;
+        opacity: 1;
+      }
+
+      html.is-animating .transition-fade {
+        opacity: 0;
+      }
+
       .pad {
         padding: 1rem;
       }
@@ -222,8 +244,10 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         <li><a href="/arkdex/operators">Operators</a></li>
       </ul>
     </header>
-    <main id="main" class={mainClass}>
-      <slot />
+    <main id="main">
+      <div id="swup" class={mainClass}>
+        <slot />
+      </div>
     </main>
   </body>
 </html>
