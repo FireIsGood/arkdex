@@ -107,6 +107,8 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       }
     </style>
     <style lang="scss">
+      // CSS variables
+
       :root {
         --color-hue-main: 190;
         --color-hue-alt: 250;
@@ -191,11 +193,12 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       }
 
       main {
+        position: relative;
         max-width: 75rem;
         min-height: calc(100vh - var(--header-height));
         margin-inline: auto;
         background-color: var(--theme-main);
-        box-shadow: 0 0 8px rgba($color: #000000, $alpha: 0.2);
+        box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.4);
       }
 
       .transition-fade {
