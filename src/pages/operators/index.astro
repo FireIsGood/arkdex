@@ -39,14 +39,15 @@ await fetch(
         operatorList.map((operator) => {
           const url = `/arkdex/operators/${operator.slug}`;
           const img = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.imageLink}.png`;
-          let classes = "";
-          classes += `rarity-${operator.rarity + 1}`;
+          let classList = [];
+          classList.push(`rarity-${operator.rarity + 1}`);
           const nameLength = operator.name.split(" ").join("").length;
           if (nameLength >= 12) {
-            classes += " tiny-name";
+            classList.push("tiny-name");
           } else if (nameLength >= 8) {
-            classes += " small-name";
+            classList.push("small-name");
           }
+          const classes = classList.join(" ");
           return (
             <li class={classes}>
               <a href={url}>
