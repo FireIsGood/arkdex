@@ -1,0 +1,173 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import type { Operator } from "../../scripts/operatorTypes";
+import { toSlug } from "../../scripts/slugGen";
+
+let operatorList = new Array();
+
+await fetch(
+  "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/master/en_US/gamedata/excel/character_table.json"
+)
+  .then((response) => response.json())
+  .then((data) => {
+    operatorList = Object.entries(data)
+      .filter(([technicalName, data]) => {
+        const operator = data as Operator;
+        return (
+          operator.profession !== "TOKEN" && operator.profession !== "TRAP"
+        );
+      })
+      .map(([technicalName, data]) => {
+        const operator = data as Operator;
+        return {
+          name: operator.name,
+          slug: toSlug(operator.name),
+          imageLink: operator.phases[0].characterPrefabKey,
+          rarity: operator.rarity,
+        };
+      })
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .sort((a, b) => b.rarity - a.rarity);
+  });
+---
+
+<style lang="scss">
+  :root {
+    // Arkinghts Rarities
+
+    --color-rarity-1: linear-gradient(
+      0deg,
+      rgb(148, 148, 148) 0%,
+      hsl(66, 0%, 74%) 80%,
+      hsl(63, 0%, 67%) 100%
+    );
+    --color-rarity-2: linear-gradient(
+      0deg,
+      hsl(63, 62%, 55%) 0%,
+      hsl(66, 74%, 74%) 80%,
+      hsl(63, 88%, 67%) 100%
+    );
+    --color-rarity-3: linear-gradient(
+      0deg,
+      hsl(195, 62%, 55%) 0%,
+      hsl(198, 74%, 74%) 80%,
+      hsl(195, 88%, 67%) 100%
+    );
+    --color-rarity-4: linear-gradient(
+      0deg,
+      hsl(287, 39%, 76%) 0%,
+      hsl(256, 47%, 81%) 80%,
+      hsl(268, 53%, 86%) 100%
+    );
+    --color-rarity-5: linear-gradient(
+      0deg,
+      hsl(51, 81%, 55%) 0%,
+      hsl(46, 67%, 75%) 80%,
+      hsl(59, 68%, 60%) 100%
+    );
+    --color-rarity-6: linear-gradient(
+      0deg,
+      hsl(27, 76%, 63%) 0%,
+      hsl(40, 82%, 67%) 72%,
+      hsl(38, 84%, 65%) 100%
+    );
+  }
+
+  @for $rarity from 1 through 6 {
+    .rarity-#{$rarity} {
+      background: var(--color-rarity-#{$rarity});
+    }
+  }
+
+  // General Styles
+
+  section > * + * {
+    margin-top: 1rem;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  a,
+  a:visited {
+    color: var(--theme-text);
+    text-decoration: none;
+  }
+
+  // Main Styles
+
+  .operator-grid {
+    --grid-width: 4.5rem;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, var(--grid-width));
+    justify-content: center;
+    gap: 0.25rem;
+    align-content: center;
+
+    li {
+      margin: 0;
+      width: var(--grid-width);
+      text-align: center;
+      word-wrap: break-word;
+      border-radius: 0.25rem;
+      overflow: hidden;
+      color: var(--theme-text-dark);
+
+      &:hover {
+        box-shadow: 0 0 4px rgba($color: #000000, $alpha: 0.4);
+      }
+
+      a {
+        width: var(--grid-width);
+        height: calc(var(--grid-width) + 1.5rem);
+
+        display: grid;
+        place-items: center;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  .small-name {
+    font-size: 0.8rem;
+  }
+  .tiny-name {
+    font-size: 0.5rem;
+  }
+</style>
+
+<MainLayout title="Arkdex ▪ Operators">
+  <section>
+    <h1>Operators</h1>
+    <ul class="operator-grid">
+      {
+        operatorList.map((operator) => {
+          const url = `/operators/${operator.slug}`;
+          const img = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.imageLink}.png`;
+          let classes = "";
+          classes += `rarity-${operator.rarity + 1}`;
+          const nameLength = operator.name.split(" ").join("").length;
+          if (nameLength >= 12) {
+            classes += " tiny-name";
+          } else if (nameLength >= 8) {
+            classes += " small-name";
+          }
+          return (
+            <li class={classes}>
+              <a href={url}>
+                <img src={img} />
+                <p class="operator-name">{operator.name}</p>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</MainLayout>

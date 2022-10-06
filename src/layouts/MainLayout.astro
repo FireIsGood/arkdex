@@ -1,0 +1,227 @@
+---
+export interface Props {
+  title: string;
+  padding?: boolean;
+}
+
+let { title, padding } = Astro.props;
+let mainClass = padding === true || padding === undefined ? "pad" : "";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <!-- Preload Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <!-- OpenGraph Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="en" />
+    <meta property="og:image" content="/assets/logo-rhodes.png" />
+    <meta
+      name="description"
+      property="og:description"
+      content="Arkinghts Operator Listing"
+    />
+    <meta property="og:site_name" content="Arkdex" />
+    <!-- Title -->
+    <title>{title}</title>
+    <!-- Styles -->
+    <style lang="scss" is:global>
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      // Webkit Scrollbar Styles
+
+      *::-webkit-scrollbar {
+        background-color: hsl(0, 0%, 93%);
+        width: 0.75rem;
+      }
+      *::-webkit-scrollbar-thumb {
+        background-color: hsl(0, 0%, 73%);
+      }
+
+      // General Styles
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--theme-bg);
+        color: var(--theme-text);
+      }
+
+      img {
+        display: block;
+      }
+
+      h1 {
+        color: var(--theme-text-emphasis);
+      }
+
+      hr {
+        border: none;
+        border-bottom: 2px solid var(--theme-text-grey);
+      }
+
+      li {
+        list-style: none;
+      }
+
+      button {
+        border: none;
+      }
+
+      a {
+        color: var(--theme-text-link);
+      }
+    </style>
+    <style lang="scss">
+      :root {
+        --color-hue-main: 190;
+        --color-hue-alt: 250;
+        --color-base-main: var(--color-hue-main), 45%;
+        --color-alt-main: var(--color-hue-alt), 45%;
+        --color-base-accent: var(--color-hue-main), 55%;
+        --color-alt-accent: var(--color-hue-alt), 55%;
+        --color-base-grey: var(--color-hue-main), 5%;
+        --color-base-link: var(--color-hue-main), 45%;
+
+        // Dark mode
+        --theme-header: hsl(var(--color-base-accent), 46%);
+        --theme-header-text: hsl(var(--color-base-accent), 97%);
+        --theme-header-text-hover: hsl(var(--color-alt-accent), 45%);
+        --theme-bg: hsl(var(--color-base-main), 93%);
+        --theme-main: hsl(var(--color-base-main), 80%);
+        --theme-card: hsl(var(--color-base-main), 73%);
+        --theme-text: hsl(var(--color-base-main), 10%);
+        --theme-text-accent: hsl(var(--color-alt-main), 35%);
+        --theme-text-emphasis: hsl(var(--color-alt-main), 40%);
+        --theme-text-grey: hsl(var(--color-base-grey), 50%);
+        --theme-text-link: hsl(var(--color-base-link), 40%);
+        --theme-tag: hsl(var(--color-alt-main), 35%);
+        --theme-tag-hover: hsl(var(--color-alt-main), 50%);
+        --theme-button: hsl(var(--color-base-main), 35%);
+        --theme-button-gap: hsl(var(--color-base-main), 20%);
+        --theme-button-hover: hsl(var(--color-base-main), 50%);
+        --theme-tag-text: hsl(var(--color-base-grey), 90%);
+
+        --header-height: 3.75rem;
+      }
+
+      // Main Styles
+
+      header {
+        position: relative;
+        height: var(--header-height);
+        display: flex;
+        align-items: center;
+        background-color: var(--theme-header);
+        color: var(--theme-header-text);
+
+        ul {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          a {
+            font-size: 1rem;
+            color: inherit;
+            text-decoration: none;
+            transition: color 150ms ease;
+
+            &:hover {
+              color: var(--theme-header-text-hover);
+            }
+          }
+        }
+
+        .logo > a,
+        .logo > a:visited {
+          padding: 0.25rem;
+          height: 100%;
+          display: flex;
+          gap: 0.35rem;
+          align-items: center;
+          font-size: 1.5em;
+
+          p {
+            color: var(--theme-header-text);
+          }
+
+          .logo-container {
+            height: 3rem;
+            width: 3rem;
+
+            img {
+              height: 100%;
+            }
+          }
+        }
+      }
+
+      main {
+        max-width: 75rem;
+        min-height: calc(100vh - var(--header-height));
+        margin-inline: auto;
+        background-color: var(--theme-main);
+        box-shadow: 0 0 8px rgba($color: #000000, $alpha: 0.2);
+      }
+
+      .pad {
+        padding: 1rem;
+      }
+
+      // Acessability
+
+      .skip-main {
+        position: absolute;
+        z-index: 999;
+        padding: 0.5rem;
+        left: 50%;
+        translate: -50% -100%;
+        background-color: var(--theme-card);
+
+        &:focus {
+          translate: -50%;
+          transition: translate 250ms ease-out;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main" class="skip-main">Skip to main content</a>
+    <header>
+      <ul>
+        <li class="logo">
+          <a href="/" title="Home Page">
+            <div class="logo-container">
+              <img src="/assets/logo_rhodes.png" alt="" />
+            </div>
+            <p>Fire's Arkdex</p>
+          </a>
+        </li>
+        <li><a href="/" title="Home Page">Home</a></li>
+        <li><a href="/operators">Operators</a></li>
+      </ul>
+    </header>
+    <main id="main" class={mainClass}>
+      <slot />
+    </main>
+  </body>
+</html>

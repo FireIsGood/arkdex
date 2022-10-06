@@ -1,0 +1,45 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<style lang="scss">
+  * + * {
+    margin-top: 1rem;
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  .grey {
+    color: var(--theme-text-grey);
+  }
+
+  .tool-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    justify-items: center;
+
+    li {
+      min-width: 400px;
+      padding: 1rem;
+      text-align: center;
+      background-color: var(--theme-card);
+    }
+  }
+</style>
+
+<MainLayout title="Arkdex ▪ Home">
+  <h1>Arkdex</h1>
+  <p>A website by FireIsGood#0733. Created with Astro.</p>
+  <p>This is generic text</p>
+  <p>
+    <a href="">This is link text</a>
+  </p>
+  <p class="grey">This is grey text</p>
+  <hr />
+  <h2>Tools:</h2>
+  <ul class="tool-cards">
+    <li><a href="/operators">Operators</a></li>
+  </ul>
+</MainLayout>
