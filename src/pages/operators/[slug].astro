@@ -43,7 +43,12 @@ const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/m
 const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.phases[0].characterPrefabKey}.png`;
 ---
 
-<MainLayout title={title} padding={false} ogImg={operatorAvatar}>
+<MainLayout
+  title={title}
+  padding={false}
+  ogImg={operatorAvatar}
+  ogDesc={operator.itemUsage}
+>
   <section>
     <a href="/arkdex/operators" class="back">
       <svg
