@@ -7,4 +7,3 @@ export default defineConfig({
   site: "https://fireisgood.github.io/",
   base: "/arkdex",
 });
-``
