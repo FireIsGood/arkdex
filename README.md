@@ -16,7 +16,7 @@ Runs on port 3000
 npm run build
 ```
 
-Creates files to `/docs` folder for github pages
+Creates files to `/docs` folder for github pages. NOTE: DEPLOYS TO /arkdex
 
 ## License
 
