@@ -1,4 +1,4 @@
-# Arkdex
+# [Arkdex](https://fireisgood.github.io/arkdex/)
 
 Arknights operator viewer made with [Astro](https://astro.build) made by FireIsGood#0733
 
