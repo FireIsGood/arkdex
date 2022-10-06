@@ -108,6 +108,7 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
         </ul>
       </ul>
       <img src={operatorImg} alt={operatorImg} />
+      <div class="backdrop"></div>
     </div>
     <div class="column-stats">
       <h1>{operator.name}</h1>
@@ -223,6 +224,13 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
       position: relative;
       width: 100%;
       max-width: 600px;
+    }
+
+    .backdrop {
+      grid-area: 1 / 1;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
     }
   }
 
