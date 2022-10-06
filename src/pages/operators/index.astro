@@ -31,6 +31,37 @@ await fetch(
   });
 ---
 
+<MainLayout title="Arkdex ▪ Operators">
+  <section>
+    <h1>Operators</h1>
+    <ul class="operator-grid">
+      {
+        operatorList.map((operator) => {
+          const url = `/arkdex/operators/${operator.slug}`;
+          const img = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.imageLink}.png`;
+          let classes = "";
+          classes += `rarity-${operator.rarity + 1}`;
+          const nameLength = operator.name.split(" ").join("").length;
+          if (nameLength >= 12) {
+            classes += " tiny-name";
+          } else if (nameLength >= 8) {
+            classes += " small-name";
+          }
+          return (
+            <li class={classes}>
+              <a href={url}>
+                <img src={img} />
+                <p class="operator-name">{operator.name}</p>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+</MainLayout>
+
+
 <style lang="scss">
   :root {
     // Arkinghts Rarities
@@ -141,33 +172,3 @@ await fetch(
     font-size: 0.5rem;
   }
 </style>
-
-<MainLayout title="Arkdex ▪ Operators">
-  <section>
-    <h1>Operators</h1>
-    <ul class="operator-grid">
-      {
-        operatorList.map((operator) => {
-          const url = `/operators/${operator.slug}`;
-          const img = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.imageLink}.png`;
-          let classes = "";
-          classes += `rarity-${operator.rarity + 1}`;
-          const nameLength = operator.name.split(" ").join("").length;
-          if (nameLength >= 12) {
-            classes += " tiny-name";
-          } else if (nameLength >= 8) {
-            classes += " small-name";
-          }
-          return (
-            <li class={classes}>
-              <a href={url}>
-                <img src={img} />
-                <p class="operator-name">{operator.name}</p>
-              </a>
-            </li>
-          );
-        })
-      }
-    </ul>
-  </section>
-</MainLayout>
