@@ -9,13 +9,13 @@ const { title, padding, ogImg } = Astro.props;
 
 const mainClass = padding === true || padding === undefined ? "pad" : "";
 const opegGraphImg =
-  ogImg !== undefined ? "/public/assets/logo_rhodes.png" : ogImg;
+  ogImg !== undefined ? "/arkdex/assets/logo_rhodes.png" : ogImg;
 ---
 
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <link rel="icon" type="image/svg+xml" href="/arkdex/favicon.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <!-- Preload Fonts -->
@@ -215,7 +215,7 @@ const opegGraphImg =
         <li class="logo">
           <a href="/arkdex" title="Home Page">
             <div class="logo-container">
-              <img src="/assets/logo_rhodes.png" alt="" />
+              <img src="/arkdex/assets/logo_rhodes.png" alt="" />
             </div>
             <p>Fire's Arkdex</p>
           </a>
