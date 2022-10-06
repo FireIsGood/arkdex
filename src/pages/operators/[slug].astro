@@ -40,10 +40,25 @@ const { technicalName, operator } = Astro.props as Props;
 const title = `Arkdex ▪ ${operator.name}`;
 const operatorPhaseCount = operator.phases.length - 1;
 const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
+const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.phases[0].characterPrefabKey}.png`;
 ---
 
-<MainLayout title={title} padding={false}>
+<MainLayout title={title} padding={false} ogImg={operatorAvatar}>
   <section>
+    <a href="/arkdex/operators" class="back">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="48"
+        width="48"
+        fill="white"
+        class="shadow"
+      >
+        <path
+          d="M24 40.65 7.4 24 24 7.4l2.6 2.6-12.2 12.2h26.25v3.65H14.4l12.2 12.2Z"
+        >
+        </path>
+      </svg>
+    </a>
     <div class="column-image">
       <ul class="image-toolbar">
         <ul>
@@ -76,7 +91,6 @@ const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/m
                 xmlns="http://www.w3.org/2000/svg"
                 height="36"
                 width="36"
-                fill="white"
                 viewBox="0 0 48 48"
               >
                 <path
@@ -132,8 +146,18 @@ const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/m
     display: flex;
     flex-direction: column;
 
-    > * {
+    > div {
       min-width: 300px;
+    }
+  }
+
+  a.back {
+    z-index: 4;
+    position: absolute;
+
+    svg {
+      display: block;
+      fill: var(--theme-button);
     }
   }
 
