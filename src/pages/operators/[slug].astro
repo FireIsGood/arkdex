@@ -40,6 +40,13 @@ const { technicalName, operator } = Astro.props as Props;
 const title = `Arkdex ▪ ${operator.name}`;
 const operatorPhaseCount = operator.phases.length - 1;
 const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
+const operatorFaction =
+  operator.teamId !== null
+    ? operator.teamId
+    : operator.groupId !== null
+    ? operator.groupId
+    : operator.nationId;
+const operatorFactionImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/factions/logo_${operatorFaction}.png`;
 const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.phases[0].characterPrefabKey}.png`;
 ---
 
@@ -107,7 +114,17 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
           </li>
         </ul>
       </ul>
-      <img src={operatorImg} alt={operatorImg} />
+      <img src={operatorImg} alt={operatorImg} class="operatorImg" />
+      {
+        operatorFaction ? (
+          <img
+            src={operatorFactionImg}
+            alt={operatorFactionImg}
+            class="factionImg"
+          />
+        ) : null
+      }
+
       <div class="backdrop"></div>
     </div>
     <div class="column-stats">
@@ -219,12 +236,24 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
       }
     }
 
-    > img {
+    .operatorImg {
       grid-area: 1 / 1;
       z-index: 1;
       position: relative;
       width: 100%;
       max-width: 600px;
+    }
+
+    .factionImg {
+      grid-area: 1 / 1;
+      z-index: 0;
+      position: relative;
+      place-self: flex-start;
+      left: 1.5rem;
+      top: 1rem;
+      width: 30%;
+      -webkit-filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
     }
 
     .backdrop {
@@ -264,7 +293,7 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
 
   // Media query for Desktop
 
-  @media (min-width: 600px) {
+  @media (min-width: 750px) {
     section {
       flex-direction: row;
 
