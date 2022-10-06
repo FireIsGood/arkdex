@@ -20,7 +20,7 @@ Creates files to `/docs` folder for github pages
 
 ## License
 
-gotta add it brb
+[AGPL 3.0](/LICENSE.md)
 
 ## Acknowledgements
 
