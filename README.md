@@ -4,7 +4,7 @@ Arknights operator viewer made with [Astro](https://astro.build) made by FireIsG
 
 ## To run
 
-```
+```bash
 npm run dev
 ```
 
@@ -12,7 +12,7 @@ Runs on port 3000
 
 ## To build
 
-```
+```bash
 npm run build
 ```
 
