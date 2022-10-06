@@ -129,7 +129,8 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
         Object.entries(operator).map(([key, value]) => {
           return (
             <p>
-              <span class="key-label">{key}:</span> {value + []}
+              <span class="key-label">{key}:</span>{" "}
+              {JSON.stringify(value, null, 2)}
             </p>
           );
         })
@@ -153,6 +154,7 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
     flex-direction: column;
 
     > div {
+      width: 100%;
       min-width: 300px;
     }
   }
@@ -170,7 +172,6 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
   .column-image {
     position: relative;
     display: grid;
-    width: 100%;
     height: 100%;
     place-self: center;
     place-items: center;
@@ -266,6 +267,10 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
   @media (min-width: 600px) {
     section {
       flex-direction: row;
+
+      > div {
+        width: 50%;
+      }
     }
 
     .column-stats {
