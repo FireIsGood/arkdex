@@ -6,4 +6,5 @@ export default defineConfig({
   output: "static",
   site: "https://fireisgood.github.io/",
   base: "/arkdex",
+  trailingSlash: "ignore",
 });
