@@ -74,27 +74,33 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
     <div class="column-image">
       <ul class="image-toolbar">
         <ul>
-          <li>
-            <button class="elite-icon" title="Switch to elite 2">
-              <img
-                src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/2-s.png"
-              />
-            </button>
-          </li>
-          <li>
-            <button class="elite-icon" title="Switch to elite 1">
-              <img
-                src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/1-s.png"
-              />
-            </button>
-          </li>
-          <li>
-            <button class="elite-icon" title="Switch to elite 0">
-              <img
-                src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/0-s.png"
-              />
-            </button>
-          </li>
+          {
+            operatorPhaseCount >= 2 ? (
+              <li>
+                <button class="elite-icon" title="Switch to elite 2">
+                  <img src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/2-s.png" />
+                </button>
+              </li>
+            ) : null
+          }
+          {
+            operatorPhaseCount >= 1 ? (
+              <li>
+                <button class="elite-icon" title="Switch to elite 1">
+                  <img src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/1-s.png" />
+                </button>
+              </li>
+            ) : null
+          }
+          {
+            operatorPhaseCount >= 0 ? (
+              <li>
+                <button class="elite-icon" title="Switch to elite 0">
+                  <img src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/0-s.png" />
+                </button>
+              </li>
+            ) : null
+          }
         </ul>
         <ul>
           <li class="section-top">
@@ -214,15 +220,18 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
       }
 
       button {
+        cursor: pointer;
         width: 2.75rem;
         padding: 0;
-        background-color: var(--theme-button);
-        cursor: pointer;
-        transition: background-color 150ms ease;
         display: flex;
         justify-content: center;
-
-        &.elite-icon {
+        transition: background-color 150ms ease, background-size 250ms ease-out;
+        background-color: var(--theme-button);
+        background-image: linear-gradient(var(--theme-card) 0 0);
+        background-repeat: no-repeat;
+        background-size: 0% 2px;
+        background-position: 0% calc(100% - 2px);
+        backg &.elite-icon {
           height: 1.75rem;
         }
 
@@ -231,6 +240,7 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
         }
 
         &:hover {
+          background-size: 30% 2px;
           background-color: var(--theme-button-hover);
         }
       }
