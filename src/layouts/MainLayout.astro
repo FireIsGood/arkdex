@@ -8,8 +8,7 @@ export interface Props {
 const { title, padding, ogImg } = Astro.props;
 
 const mainClass = padding === true || padding === undefined ? "pad" : "";
-const opegGraphImg =
-  ogImg !== undefined ? "/arkdex/assets/logo_rhodes.png" : ogImg;
+const opegGraphImg = ogImg ? ogImg : "/arkdex/assets/logo_rhodes.png";
 ---
 
 <html lang="en">
