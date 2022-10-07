@@ -196,6 +196,12 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
       display: block;
       fill: var(--theme-button);
     }
+    &:hover svg {
+      fill: var(--theme-button-hover);
+    }
+    &:active svg {
+      fill: var(--theme-button-active);
+    }
   }
 
   .column-image {
@@ -249,6 +255,9 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
         &:hover {
           background-size: 30% 2px;
           background-color: var(--theme-button-hover);
+        }
+        &:active {
+          background-color: var(--theme-button-active);
         }
       }
     }

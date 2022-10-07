@@ -132,8 +132,11 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 
         // Light mode
         --theme-header: hsl(var(--color-base-accent), 46%);
+        --theme-header-button: hsl(var(--color-base-accent), 53%);
+        --theme-header-button-hover: hsl(var(--color-base-accent), 56%);
+        --theme-header-button-active: hsl(var(--color-base-accent), 50%);
         --theme-header-text: hsl(var(--color-base-accent), 97%);
-        --theme-header-text-hover: hsl(var(--color-alt-accent), 90%);
+        --theme-header-text-hover: hsl(var(--color-base-accent), 100%);
         --theme-bg: hsl(var(--color-base-main), 93%);
         --theme-main: hsl(var(--color-base-main), 80%);
         --theme-card: hsl(var(--color-base-main), 73%);
@@ -145,9 +148,9 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         --theme-tag: hsl(var(--color-alt-main), 35%);
         --theme-tag-hover: hsl(var(--color-alt-main), 50%);
         --theme-button: hsl(var(--color-base-main), 35%);
+        --theme-button-hover: hsl(var(--color-base-main), 40%);
+        --theme-button-active: hsl(var(--color-base-main), 50%);
         --theme-button-gap: hsl(var(--color-base-main), 20%);
-        --theme-button-hover: hsl(var(--color-base-main), 60%);
-        --theme-button-active: hsl(var(--color-base-main), 55%);
         --theme-tag-text: hsl(var(--color-base-grey), 90%);
 
         --header-height: 3.75rem;
@@ -164,6 +167,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         color: var(--theme-header-text);
         justify-content: space-between;
         gap: 1rem;
+        padding-inline: 0.5rem;
 
         a {
           font-size: 1rem;
@@ -201,23 +205,6 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 
         nav {
           display: flex;
-          // position: relative;
-          // flex-direction: column;
-
-          // &:hover,
-          // &:focus-within {
-          //   button {
-          //     background-color: var(--theme-button-hover);
-
-          //     &:active {
-          //       background-color: var(--theme-button-active);
-          //     }
-
-          //     & + ul {
-          //       display: block;
-          //     }
-          //   }
-          // }
 
           button {
             height: var(--header-height);
@@ -226,7 +213,6 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
             justify-content: center;
             align-items: center;
             display: none;
-            // display: flex;
             background-color: transparent;
           }
 
@@ -234,20 +220,23 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
             display: flex;
             flex-direction: row;
             align-items: center;
-            // display: none;
-            // position: absolute;
-            // right: 0;
-            // top: 100%;
-            // background-color: var(--theme-button-hover);
+            margin-right: 0.5rem;
+            gap: 1rem;
 
             > li a {
               display: block;
-              padding: 0.25rem 1rem;
               text-align: center;
-              font-size: 1.5rem;
+              font-size: 1.25rem;
+              padding: 0.5rem;
+              border-radius: 0.5rem;
+              background-color: var(--theme-header-button);
+
+              &:hover {
+                background-color: var(--theme-header-button-hover);
+              }
 
               &:active {
-                background-color: var(--theme-button-active);
+                background-color: var(--theme-header-button-active);
               }
             }
           }
@@ -296,7 +285,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         }
       }
 
-      // Media query for Desktop
+      // Media query for Mobile
 
       @media (max-width: 750px) {
         header {
@@ -308,13 +297,15 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
             &:focus-within {
               button {
                 background-color: var(--theme-button-hover);
+                pointer-events: none;
 
                 &:active {
                   background-color: var(--theme-button-active);
                 }
 
-                & + ul {
+                & + .nav-links {
                   display: block;
+                  height: auto;
                 }
               }
             }
@@ -328,7 +319,17 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
               position: absolute;
               right: 0;
               top: 100%;
-              background-color: var(--theme-button-hover);
+              margin: 0;
+              overflow: hidden;
+              height: 0%;
+              transition: height 250ms ease;
+              box-shadow: 0 2px 2px rgba($color: #000000, $alpha: 0.25);
+
+              > li a {
+                padding: 0.5rem 1rem;
+                font-size: 1.75rem;
+                border-radius: 0;
+              }
             }
           }
         }
