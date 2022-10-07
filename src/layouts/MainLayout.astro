@@ -32,9 +32,17 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       import Swup from "swup";
       import SwupA11yPlugin from "@swup/a11y-plugin";
       import SwupHeadPlugin from "@swup/head-plugin";
+      import SwupScrollPlugin from "@swup/scroll-plugin";
 
       const options = {
-        plugins: [new SwupHeadPlugin(), new SwupA11yPlugin()],
+        doScrollingRightAway: true,
+        animateScroll: false,
+        shouldResetScrollPosition: (link: any) => !link.matches(".backlink"),
+        plugins: [
+          new SwupHeadPlugin(),
+          new SwupA11yPlugin(),
+          new SwupScrollPlugin(),
+        ],
       };
 
       const swup = new Swup(options);
@@ -78,10 +86,6 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       }
 
       // General Styles
-
-      html {
-        scroll-behavior: smooth;
-      }
 
       body {
         background-color: var(--theme-bg);
@@ -206,6 +210,10 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         margin-inline: auto;
         background-color: var(--theme-main);
         box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.4);
+
+        &[tabindex="-1"] {
+          outline: none;
+        }
       }
 
       .transition-fade {
