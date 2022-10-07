@@ -135,6 +135,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         --theme-header-button: hsl(var(--color-base-accent), 53%);
         --theme-header-button-hover: hsl(var(--color-base-accent), 56%);
         --theme-header-button-active: hsl(var(--color-base-accent), 50%);
+        --theme-header-button-gap: hsl(var(--color-base-accent), 30%);
         --theme-header-text: hsl(var(--color-base-accent), 97%);
         --theme-header-text-hover: hsl(var(--color-base-accent), 100%);
         --theme-bg: hsl(var(--color-base-main), 93%);
@@ -325,10 +326,16 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
               transition: height 250ms ease;
               box-shadow: 0 2px 2px rgba($color: #000000, $alpha: 0.25);
 
-              > li a {
-                padding: 0.5rem 1rem;
-                font-size: 1.75rem;
-                border-radius: 0;
+              > li {
+                a {
+                  padding: 0.5rem 1rem;
+                  font-size: 1.75rem;
+                  border-radius: 0;
+                }
+              }
+
+              > * + * {
+                border-top: 1px solid var(--theme-header-button-gap);
               }
             }
           }
@@ -360,8 +367,8 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
           </svg>
         </button>
         <ul class="nav-links">
-          <li><a href="/arkdex" title="Home Page">Home</a></li>
-          <li><a href="/arkdex/operators">Operators</a></li>
+          <li><a href="/arkdex" title="Home Page" class="backlink">Home</a></li>
+          <li><a href="/arkdex/operators" class="backlink">Operators</a></li>
         </ul>
       </nav>
     </header>
