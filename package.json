@@ -11,8 +11,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/image": "^0.9.2",
     "@swup/a11y-plugin": "^2.1.0",
-    "astro": "^1.4.3"
+    "astro": "^1.4.3",
+    "sharp": "^0.31.1"
   },
   "devDependencies": {
     "@swup/head-plugin": "^1.2.1",

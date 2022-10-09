@@ -1,5 +1,7 @@
 import { defineConfig } from "astro/config";
 
+import image from "@astrojs/image";
+
 // https://astro.build/config
 export default defineConfig({
   outDir: "./docs",
@@ -7,4 +9,5 @@ export default defineConfig({
   site: "https://fireisgood.github.io/",
   base: "/arkdex",
   trailingSlash: "ignore",
+  integrations: [image()]
 });
