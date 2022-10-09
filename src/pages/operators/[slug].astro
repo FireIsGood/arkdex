@@ -2,6 +2,7 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import type { Operator } from "../../scripts/operatorTypes";
 import { toSlug } from "../../scripts/slugGen";
+import { Image } from "@astrojs/image/components";
 
 export async function getStaticPaths() {
   let operatorList = new Array();
@@ -123,9 +124,12 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
       <img src={operatorImg} alt={operatorImg} class="operatorImg" />
       {
         operatorFaction ? (
-          <img
+          <Image
             src={operatorFactionImg}
             alt={operatorFactionImg}
+            format={"png"}
+            width={180}
+            height={180}
             class="factionImg"
           />
         ) : null
