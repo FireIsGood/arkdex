@@ -2,6 +2,7 @@
 import MainLayout from "../../layouts/MainLayout.astro";
 import type { Operator } from "../../scripts/operatorTypes";
 import { toSlug } from "../../scripts/slugGen";
+import { Image } from "@astrojs/image/components";
 
 let operatorList = new Array();
 
@@ -51,7 +52,7 @@ await fetch(
           return (
             <li class={classes}>
               <a href={url}>
-                <img src={img} />
+                <Image src={img} alt="" format={"png"} width={72} height={72} />
                 <p class="operator-name">{operator.name}</p>
               </a>
             </li>
