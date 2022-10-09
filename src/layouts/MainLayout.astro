@@ -1,4 +1,6 @@
 ---
+import { Image } from "@astrojs/image/components";
+
 export interface Props {
   title: string;
   padding?: boolean;
@@ -125,27 +127,27 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         --color-hue-alt: 250;
         --color-base-main: var(--color-hue-main), 45%;
         --color-alt-main: var(--color-hue-alt), 45%;
-        --color-base-accent: var(--color-hue-main), 55%;
-        --color-alt-accent: var(--color-hue-alt), 55%;
+        --color-base-accent: var(--color-hue-main), 60%;
+        --color-alt-accent: var(--color-hue-alt), 60%;
         --color-base-grey: var(--color-hue-main), 5%;
         --color-base-link: var(--color-hue-main), 45%;
 
         // Light mode
-        --theme-header: hsl(var(--color-base-accent), 46%);
-        --theme-header-button: hsl(var(--color-base-accent), 53%);
-        --theme-header-button-hover: hsl(var(--color-base-accent), 56%);
-        --theme-header-button-active: hsl(var(--color-base-accent), 50%);
+        --theme-header: hsl(var(--color-base-accent), 45%);
+        --theme-header-button: hsl(var(--color-base-accent), 45%);
+        --theme-header-button-hover: hsl(var(--color-base-accent), 50%);
+        --theme-header-button-active: hsl(var(--color-base-accent), 48%);
         --theme-header-button-gap: hsl(var(--color-base-accent), 30%);
         --theme-header-text: hsl(var(--color-base-accent), 97%);
         --theme-header-text-hover: hsl(var(--color-base-accent), 100%);
         --theme-bg: hsl(var(--color-base-main), 93%);
         --theme-main: hsl(var(--color-base-main), 80%);
-        --theme-card: hsl(var(--color-base-main), 73%);
+        --theme-card: hsl(var(--color-base-main), 83%);
         --theme-text: hsl(var(--color-base-main), 10%);
         --theme-text-accent: hsl(var(--color-alt-main), 35%);
         --theme-text-emphasis: hsl(var(--color-alt-main), 40%);
-        --theme-text-grey: hsl(var(--color-base-grey), 50%);
-        --theme-text-link: hsl(var(--color-base-link), 40%);
+        --theme-text-grey: hsl(var(--color-base-grey), 40%);
+        --theme-text-link: hsl(var(--color-base-link), 30%);
         --theme-tag: hsl(var(--color-alt-main), 35%);
         --theme-tag-hover: hsl(var(--color-alt-main), 50%);
         --theme-button: hsl(var(--color-base-main), 35%);
@@ -160,7 +162,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       // Main Styles
 
       header {
-        z-index: 999;
+        z-index: 10;
         position: relative;
         height: var(--header-height);
         display: flex;
@@ -200,6 +202,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 
             img {
               height: 100%;
+              width: 100%;
             }
           }
         }
@@ -276,6 +279,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         position: absolute;
         z-index: 999;
         padding: 0.5rem;
+        top: 0;
         left: 50%;
         translate: -50% -100%;
         background-color: var(--theme-card);
@@ -349,7 +353,13 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       <div class="logo">
         <a href="/arkdex" title="Home Page">
           <div class="logo-container">
-            <img src="/arkdex/assets/logo_rhodes.png" alt="" />
+            <Image
+              src={"/arkdex/assets/logo_rhodes.png"}
+              alt=""
+              format={"png"}
+              width={72}
+              height={72}
+            />
           </div>
           <p>Fire's Arkdex</p>
         </a>
