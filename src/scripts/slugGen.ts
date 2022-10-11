@@ -4,3 +4,7 @@ export function toSlug(str: string) {
     .replace(/[^\w-]+/g, "")
     .toLowerCase();
 }
+
+export function removeSpace(str: string) {
+  return str.replace(/[^\w(-)]+/g, "").toLowerCase();
+}
