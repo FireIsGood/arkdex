@@ -14,7 +14,12 @@
     "@astrojs/image": "^0.9.2",
     "@astrojs/svelte": "^1.0.1",
     "@swup/a11y-plugin": "^2.1.0",
+    "@swup/body-class-plugin": "^1.0.2",
+    "@swup/scripts-plugin": "^1.1.0",
     "astro": "^1.4.3",
+    "http-cache-semantics": "4.1.0",
+    "image-size": "1.0.2",
+    "mime": "3.0.0",
     "sharp": "^0.31.1",
     "svelte": "^3.51.0"
   },

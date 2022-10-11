@@ -36,6 +36,8 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       import SwupA11yPlugin from "@swup/a11y-plugin";
       import SwupHeadPlugin from "@swup/head-plugin";
       import SwupScrollPlugin from "@swup/scroll-plugin";
+      import SwupBodyClassPlugin from "@swup/body-class-plugin";
+      import SwupScriptsPlugin from "@swup/scripts-plugin";
 
       const options = {
         doScrollingRightAway: true,
@@ -45,6 +47,8 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
           new SwupHeadPlugin(),
           new SwupA11yPlugin(),
           new SwupScrollPlugin(),
+          new SwupBodyClassPlugin(),
+          new SwupScriptsPlugin(),
         ],
       };
 
