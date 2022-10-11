@@ -18,7 +18,7 @@
     <input type="text" placeholder="Search Operators" bind:value={input} />
   </div>
   <div>
-    <slot>No Operators Found</slot>
+    <slot />
   </div>
 </div>
 
