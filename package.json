@@ -13,6 +13,8 @@
   "dependencies": {
     "@astrojs/image": "^0.9.3",
     "@astrojs/svelte": "^1.0.1",
+    "@swup/body-class-plugin": "^1.0.2",
+    "@swup/scripts-plugin": "^1.1.0",
     "astro": "^1.4.7",
     "http-cache-semantics": "4.1.0",
     "image-size": "1.0.2",
