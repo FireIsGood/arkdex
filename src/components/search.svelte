@@ -14,22 +14,11 @@
 </script>
 
 <div class="container">
-  <div class="search">
-    <input type="text" placeholder="Search Operators" bind:value={input} />
-  </div>
-  <div>
-    <slot />
-  </div>
+  <input type="text" placeholder="Search Operators" bind:value={input} />
 </div>
 
 <style lang="scss">
   .container {
-    & > * + * {
-      margin-top: 1rem;
-    }
-  }
-
-  .search {
     display: flex;
     justify-content: center;
   }
