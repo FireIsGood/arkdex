@@ -6,9 +6,10 @@ export interface Props {
   padding?: boolean;
   ogImg?: string;
   ogDesc?: string;
+  alwaysScrollbar?: boolean;
 }
 
-const { title, padding, ogImg, ogDesc } = Astro.props;
+const { title, padding, ogImg, ogDesc, alwaysScrollbar } = Astro.props;
 
 let mainClass = padding === true || padding === undefined ? "pad" : "";
 mainClass += " transition-fade";
@@ -118,6 +119,17 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       a {
         color: var(--theme-text-link);
       }
+
+      input[type="text"] {
+        background-color: var(--theme-search-bg);
+        border: 2px solid var(--theme-search-border);
+
+        &:focus {
+          background-color: var(--theme-search-bg-focus);
+          border: 2px solid var(--theme-search-border-focus);
+          outline: none;
+        }
+      }
     </style>
     <style lang="scss">
       // CSS variables
@@ -155,6 +167,10 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         --theme-button-active: hsl(var(--color-base-main), 50%);
         --theme-button-gap: hsl(var(--color-base-main), 20%);
         --theme-tag-text: hsl(var(--color-base-grey), 90%);
+        --theme-search-bg: hsl(var(--color-base-main), 96%);
+        --theme-search-bg-focus: hsl(var(--color-base-main), 95%);
+        --theme-search-border: hsl(var(--color-base-main), 50%);
+        --theme-search-border-focus: hsl(var(--color-base-main), 40%);
 
         --header-height: 3.75rem;
       }
@@ -250,7 +266,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       main {
         position: relative;
         max-width: 75rem;
-        min-height: calc(100vh - var(--header-height));
+        min-height: calc(100vh - var(--header-height) - 1px);
         margin-inline: auto;
         background-color: var(--theme-main);
         box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.4);
@@ -271,6 +287,10 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 
       .pad {
         padding: 1rem;
+      }
+
+      .always-scroll {
+        overflow-y: scroll;
       }
 
       // Acessability
@@ -347,7 +367,7 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       }
     </style>
   </head>
-  <body>
+  <body class={alwaysScrollbar === true ? " always-scroll" : ""}>
     <a href="#main" class="skip-main">Skip to main content</a>
     <header>
       <div class="logo">

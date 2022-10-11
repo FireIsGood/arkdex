@@ -1,7 +1,7 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import type { Operator } from "../../scripts/operatorTypes";
-import { toSlug } from "../../scripts/slugGen";
+import MainLayout from "@layouts/MainLayout.astro";
+import type { Operator } from "@scripts/operatorTypes";
+import { toSlug } from "@scripts/slugGen";
 import { Image } from "@astrojs/image/components";
 
 export async function getStaticPaths() {
@@ -139,7 +139,7 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
     </div>
     <div class="column-stats">
       <h1>{operator.name}</h1>
-      <p>{technicalName}</p>
+      <p>{technicalName} {slug}</p>
       <ul class="tag-list">
         {
           Object.entries(operator.tagList).map((tag) => {

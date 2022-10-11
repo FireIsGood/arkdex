@@ -1,7 +1,9 @@
 ---
-import MainLayout from "../../layouts/MainLayout.astro";
-import type { Operator } from "../../scripts/operatorTypes";
-import { toSlug } from "../../scripts/slugGen";
+import MainLayout from "@layouts/MainLayout.astro";
+import Search from "@components/search.svelte";
+import SearchItem from "@components/search-item.svelte";
+import type { Operator } from "@scripts/operatorTypes";
+import { toSlug } from "@scripts/slugGen";
 import { Image } from "@astrojs/image/components";
 
 let operatorList = new Array();
@@ -32,40 +34,46 @@ await fetch(
   });
 ---
 
-<MainLayout title="Arkdex ▪ Operators">
+<MainLayout title="Arkdex ▪ Operators" alwaysScrollbar={true}>
   <section style="opacity: 0">
     <h1>Operators</h1>
-    <ul class="operator-grid">
-      {
-        operatorList.map((operator) => {
-          const url = `/arkdex/operators/${operator.slug}`;
-          const img = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.imageLink}.png`;
-          let classList = [];
-          classList.push(`rarity-${operator.rarity + 1}`);
-          const nameLength = operator.name.split(" ").join("").length;
-          if (nameLength >= 12) {
-            classList.push("tiny-name");
-          } else if (nameLength >= 8) {
-            classList.push("small-name");
+    <div>
+      <Search client:load>
+        <ul class="operator-grid">
+          {
+            operatorList.map((operator) => {
+              const url = `/arkdex/operators/${operator.slug}`;
+              const img = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.imageLink}.png`;
+              let classList = [];
+              classList.push(`rarity-${operator.rarity + 1}`);
+              const nameLength = operator.name.split(" ").join("").length;
+              if (nameLength >= 12) {
+                classList.push("tiny-name");
+              } else if (nameLength >= 8) {
+                classList.push("small-name");
+              }
+              const classes = classList.join(" ");
+              return (
+                <SearchItem client:load slug={operator.slug}>
+                  <li class={classes}>
+                    <a href={url}>
+                      <Image
+                        src={img}
+                        alt=""
+                        format={"webp"}
+                        width={108}
+                        height={108}
+                      />
+                      <p class="operator-name">{operator.name}</p>
+                    </a>
+                  </li>
+                </SearchItem>
+              );
+            })
           }
-          const classes = classList.join(" ");
-          return (
-            <li class={classes}>
-              <a href={url}>
-                <Image
-                  src={img}
-                  alt=""
-                  format={"webp"}
-                  width={108}
-                  height={108}
-                />
-                <p class="operator-name">{operator.name}</p>
-              </a>
-            </li>
-          );
-        })
-      }
-    </ul>
+        </ul>
+      </Search>
+    </div>
   </section>
 </MainLayout>
 
