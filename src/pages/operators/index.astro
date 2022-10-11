@@ -1,9 +1,7 @@
 ---
-import MainLayout from "@layouts/MainLayout.astro";
-import Search from "@components/search.svelte";
-import SearchItem from "@components/search-item.svelte";
-import type { Operator } from "@scripts/operatorTypes";
-import { toSlug } from "@scripts/slugGen";
+import MainLayout from "../../layouts/MainLayout.astro";
+import type { Operator } from "../../scripts/operatorTypes";
+import { toSlug } from "../../scripts/slugGen";
 import { Image } from "@astrojs/image/components";
 
 let operatorList = new Array();
@@ -34,12 +32,9 @@ await fetch(
   });
 ---
 
-<MainLayout title="Arkdex ▪ Operators" alwaysScrollbar={true}>
+<MainLayout title="Arkdex ▪ Operators">
   <section style="opacity: 0">
     <h1>Operators</h1>
-    <div>
-      <Search client:visible />
-    </div>
     <ul class="operator-grid">
       {
         operatorList.map((operator) => {
@@ -55,20 +50,18 @@ await fetch(
           }
           const classes = classList.join(" ");
           return (
-            <SearchItem client:visible slug={operator.slug}>
-              <li class={classes}>
-                <a href={url}>
-                  <Image
-                    src={img}
-                    alt=""
-                    format={"webp"}
-                    width={108}
-                    height={108}
-                  />
-                  <p class="operator-name">{operator.name}</p>
-                </a>
-              </li>
-            </SearchItem>
+            <li class={classes}>
+              <a href={url}>
+                <Image
+                  src={img}
+                  alt=""
+                  format={"webp"}
+                  width={108}
+                  height={108}
+                />
+                <p class="operator-name">{operator.name}</p>
+              </a>
+            </li>
           );
         })
       }
