@@ -54,7 +54,6 @@
   async function handleKeydown(event) {
     if (event.key !== "Enter") return;
     if (trueMatch) {
-      console.log(trueMatch);
       linkToMatch?.click();
     }
   }
