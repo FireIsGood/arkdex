@@ -9,8 +9,6 @@
   import bernard from "../assets/bernard.png?url";
   import rick from "../assets/code.png?url";
 
-  let linkToMatch: Element;
-
   const secrets = <any>{
     amogus: amogus,
     sussy: amogus,
@@ -28,12 +26,24 @@
 
   export let operatorList: Array<OperatorSearch>;
   let trueMatch: string = "";
+  let linkToMatch: Element;
+
   let input: string;
 
   $: {
+    // Parse input
     if (input) {
       const cleanInput = removeSpace(input);
       searchTerm.set(cleanInput);
+
+      // List of operators that partially match
+      let queryMatch: Array<OperatorSearch> = operatorList.filter((item) => {
+        return (
+          item.trueSlug.slice(0, cleanInput.length) ===
+          cleanInput.slice(0, cleanInput.length)
+        );
+      });
+
       if (
         operatorList.some((item) => {
           return item.trueSlug === cleanInput;
@@ -43,6 +53,8 @@
           (item) => item.trueSlug === cleanInput
         );
         trueMatch = operatorList[i].slug;
+      } else if (queryMatch) {
+        trueMatch = queryMatch[0]?.slug;
       } else {
         trueMatch = "";
       }
@@ -52,9 +64,13 @@
   }
 
   async function handleKeydown(event) {
-    if (event.key !== "Enter") return;
-    if (trueMatch) {
-      linkToMatch?.click();
+    if (event.key === "Enter") {
+      if (trueMatch) {
+        linkToMatch?.click();
+      }
+    }
+    if (event.key === "Backspace") {
+      searchTerm.set("?");
     }
   }
 </script>
@@ -67,12 +83,8 @@
     bind:value={input}
     on:keydown={handleKeydown}
   />
-  <a
-    href={`/arkdex/operators/${trueMatch}`}
-    bind:this={linkToMatch}
-    class="secret"
-  >
-    This should never appear
+  <a href={`/arkdex/operators/${trueMatch}`} bind:this={linkToMatch} class="">
+    /arkdex/operators/{trueMatch}
   </a>
   <div class:secret={!($searchTerm in secrets)}>
     <div class="image">

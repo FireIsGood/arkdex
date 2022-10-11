@@ -44,8 +44,11 @@ await fetch(
         return {
           trueSlug: removeSpace(operator.name),
           slug: toSlug(operator.name),
+          rarity: operator.rarity,
         };
-      });
+      })
+      .sort((a, b) => a?.slug.localeCompare(b?.slug))
+      .sort((a, b) => b.rarity - a.rarity);
   });
 ---
 
