@@ -9,6 +9,8 @@
   import bernard from "../assets/bernard.png?url";
   import rick from "../assets/code.png?url";
 
+  let linkToMatch: Element;
+
   const secrets = <any>{
     amogus: amogus,
     sussy: amogus,
@@ -19,19 +21,58 @@
     rick: rick,
   };
 
+  type OperatorSearch = {
+    slug: string;
+    trueSlug: string;
+  };
+
+  export let operatorList: Array<OperatorSearch>;
+  let trueMatch: string = "";
   let input: string;
 
   $: {
     if (input) {
-      searchTerm.set(removeSpace(input));
+      const cleanInput = removeSpace(input);
+      searchTerm.set(cleanInput);
+      if (
+        operatorList.some((item) => {
+          return item.trueSlug === cleanInput;
+        })
+      ) {
+        const i = operatorList.findIndex(
+          (item) => item.trueSlug === cleanInput
+        );
+        trueMatch = operatorList[i].slug;
+      } else {
+        trueMatch = "";
+      }
     } else {
       searchTerm.set("?");
+    }
+  }
+
+  async function handleKeydown(event) {
+    if (event.key !== "Enter") return;
+    if (trueMatch) {
+      console.log(trueMatch);
+      linkToMatch?.click();
     }
   }
 </script>
 
 <div class="container">
-  <input type="text" placeholder="Search Operators" bind:value={input} />
+  <input
+    type="text"
+    placeholder="Search Operators"
+    autocomplete="false"
+    bind:value={input}
+    on:keydown={handleKeydown}
+  />
+  <a
+    href={`/arkdex/operators/${trueMatch}`}
+    bind:this={linkToMatch}
+    class="secret"
+  />
   <div class:secret={!($searchTerm in secrets)}>
     <div class="image">
       <img src={secrets[$searchTerm]} alt="oh no" />
