@@ -71,7 +71,9 @@
     href={`/arkdex/operators/${trueMatch}`}
     bind:this={linkToMatch}
     class="secret"
-  />
+  >
+    This should never appear
+  </a>
   <div class:secret={!($searchTerm in secrets)}>
     <div class="image">
       <img src={secrets[$searchTerm]} alt="oh no" />
