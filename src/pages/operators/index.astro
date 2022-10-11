@@ -38,7 +38,7 @@ await fetch(
   <section style="opacity: 0">
     <h1>Operators</h1>
     <div>
-      <Search client:load />
+      <Search client:visible />
     </div>
     <ul class="operator-grid">
       {
@@ -55,7 +55,7 @@ await fetch(
           }
           const classes = classList.join(" ");
           return (
-            <SearchItem client:load slug={operator.slug}>
+            <SearchItem client:visible slug={operator.slug}>
               <li class={classes}>
                 <a href={url}>
                   <Image
