@@ -36,12 +36,14 @@
 
   export let operatorList: Array<SearchItem> = [];
   let operatorListFiltered: Array<SearchItem> = operatorList;
+  let operatorListShown: Array<SearchItem> = operatorListFiltered;
   let trueMatch: string = "";
   let linkToMatch: Element;
 
   let input: string = "";
   let selected: string = input;
   let showAll: boolean = false;
+  let fullLength: number;
 
   $: {
     // Parse input (s for shorthand)
@@ -55,20 +57,30 @@
         )
         .sort((a, b) => levenshtein(s, a.trueSlug) - levenshtein(s, b.trueSlug))
         .sort((a, b) => b.rarity - a.rarity)
-        .sort((a, b) => (a.trueSlug === s ? -1 : 1))
-        .slice(0, showAll ? undefined : 10);
+        .sort((a, b) => (a.trueSlug === s ? -1 : 1));
+      fullLength = operatorListFiltered.length;
+      operatorListShown = operatorListFiltered.slice(
+        0,
+        showAll ? undefined : 10
+      );
+
       trueMatch = operatorListFiltered[0]?.trueSlug ?? "";
     } else {
       operatorListFiltered = operatorList;
+      operatorListShown = operatorListFiltered;
       trueMatch = "";
+      showAll = false;
     }
-    operatorListFiltered.sort();
   }
 
   async function handleKeydown(event) {
     if (event.key === "Enter" && trueMatch) {
       linkToMatch?.click();
     }
+  }
+
+  function revealRest() {
+    showAll = true;
   }
 </script>
 
@@ -97,7 +109,7 @@
   </div>
   <div class="grid-items">
     <ul class="operator-grid">
-      {#each operatorListFiltered as operator}
+      {#each operatorListShown as operator}
         <li>
           <a
             href={`/arkdex/operators/${operator.slug}`}
@@ -119,10 +131,18 @@
       {/each}
     </ul>
   </div>
+  {#if operatorListShown < operatorListFiltered}
+    <button on:click={revealRest} class="show-more"
+      >Show {fullLength - 10} more?</button
+    >
+  {/if}
 </div>
 
 <style lang="scss">
   .container {
+    display: flex;
+    flex-direction: column;
+
     > * + * {
       margin-top: 1rem;
     }
@@ -226,6 +246,10 @@
     }
   }
 
+  .grid-items {
+    width: 100%;
+  }
+
   .operator-grid {
     --grid-width: 4.5rem;
 
@@ -261,5 +285,10 @@
     transition: box-shadow 150ms linear, outline 150ms linear;
     box-shadow: inset 0 0 4px white;
     outline: 2px solid white;
+  }
+
+  .show-more {
+    width: max-content;
+    margin-inline: auto;
   }
 </style>

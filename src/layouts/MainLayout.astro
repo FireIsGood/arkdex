@@ -124,6 +124,19 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 
       button {
         border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        font-size: inherit;
+        background-color: var(--theme-button);
+
+        &:hover {
+          background-color: var(--theme-button-hover);
+        }
+
+        &:active {
+          background-color: var(--theme-button-active);
+        }
       }
 
       a {
@@ -162,21 +175,26 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         --theme-header-button-gap: hsl(var(--color-base-accent), 30%);
         --theme-header-text: hsl(var(--color-base-accent), 97%);
         --theme-header-text-hover: hsl(var(--color-base-accent), 100%);
+
         --theme-bg: hsl(var(--color-base-main), 95%);
         --theme-main: hsl(var(--color-base-main), 80%);
         --theme-card: hsl(var(--color-base-main), 88%);
+
         --theme-text: hsl(var(--color-base-main), 10%);
         --theme-text-accent: hsl(var(--color-alt-main), 35%);
         --theme-text-emphasis: hsl(var(--color-alt-main), 40%);
         --theme-text-grey: hsl(var(--color-base-grey), 35%);
         --theme-text-link: hsl(var(--color-base-link), 30%);
+
         --theme-tag: hsl(var(--color-alt-main), 35%);
-        --theme-tag-hover: hsl(var(--color-alt-main), 50%);
-        --theme-button: hsl(var(--color-base-main), 35%);
-        --theme-button-hover: hsl(var(--color-base-main), 40%);
-        --theme-button-active: hsl(var(--color-base-main), 50%);
-        --theme-button-gap: hsl(var(--color-base-main), 20%);
         --theme-tag-text: hsl(var(--color-base-grey), 90%);
+        --theme-tag-hover: hsl(var(--color-alt-main), 50%);
+
+        --theme-button: hsl(var(--color-base-main), 55%);
+        --theme-button-hover: hsl(var(--color-base-main), 50%);
+        --theme-button-active: hsl(var(--color-base-main), 48%);
+        --theme-button-gap: hsl(var(--color-base-main), 20%);
+
         --theme-search-bg: hsl(var(--color-base-main), 96%);
         --theme-search-bg-focus: hsl(var(--color-base-main), 95%);
         --theme-search-border: hsl(var(--color-base-main), 50%);
