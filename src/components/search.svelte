@@ -77,7 +77,11 @@
       on:keydown={handleKeydown}
       bind:this={searchbar}
     />
-    <a href={`/arkdex/operators/${trueMatch}`} bind:this={linkToMatch} class="">
+    <a
+      href={`/arkdex/operators/${trueMatch}`}
+      bind:this={linkToMatch}
+      class="secret"
+    >
       /arkdex/operators/{trueMatch}
     </a>
     <div class:secret={!(selected in secrets)}>
