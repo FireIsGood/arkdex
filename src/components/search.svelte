@@ -52,7 +52,7 @@
           (item) => item.trueSlug.slice(0, s.length) === s.slice(0, s.length)
         )
         .sort((a, b) => (a.trueSlug === s ? -1 : 1));
-      trueMatch = operatorListFiltered[0].slug;
+      trueMatch = operatorListFiltered[0].trueSlug ?? "";
     } else {
       operatorListFiltered = operatorList;
       trueMatch = "";
