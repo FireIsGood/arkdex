@@ -1,6 +1,7 @@
 ---
 import { Image } from "@astrojs/image/components";
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
+import { SEO } from "astro-seo";
 
 export interface Props {
   title: string;
@@ -53,16 +54,21 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       const swup = new Swup(options);
     </script>
     <!-- HTML Meta Tags -->
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <!-- OpenGraph Tags -->
-    <meta property="og:type" content="article" />
-    <meta property="og:locale" content="en" />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={opegGraphImg} />
-    <meta property="og:site_name" content="Arkdex" />
-    <!-- Styles -->
+    <SEO
+      title={title}
+      description={description}
+      openGraph={{
+        basic: {
+          title: title,
+          type: "article",
+          image: opegGraphImg,
+        },
+        optional: {
+          locale: "en_US",
+          siteName: "Arkdex",
+        },
+      }}
+    />
     <style lang="scss" is:global>
       // General Styles
 

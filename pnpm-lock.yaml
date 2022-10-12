@@ -11,6 +11,7 @@ specifiers:
   astro: ^1.4.7
   astro-compress: ^1.0.11
   astro-google-fonts-optimizer: ^0.2.2
+  astro-seo: ^0.6.0
   http-cache-semantics: 4.1.0
   image-size: 1.0.2
   mime: 3.0.0
@@ -30,6 +31,7 @@ dependencies:
   astro: 1.4.7_sass@1.55.0
   astro-compress: 1.0.11
   astro-google-fonts-optimizer: 0.2.2
+  astro-seo: 0.6.0
   http-cache-semantics: 4.1.0
   image-size: 1.0.2
   mime: 3.0.0
@@ -866,6 +868,10 @@ packages:
 
   /astro-google-fonts-optimizer/0.2.2:
     resolution: {integrity: sha512-YQxp/ExF3NzUomAGuu1VKecO7/ETRnhnE50gqwAqfpbGPZFj4MYa4XxK1ukBg3R63QmKuE5uurOiKmXiLzttuw==}
+    dev: false
+
+  /astro-seo/0.6.0:
+    resolution: {integrity: sha512-nR+dJlAyQhX6s0oAmbBqPq3KCZax/zVAerFsclGiJQ2znOkS/7L+RGjziS4M9Q3OQxm3FMfqIKHp9Ns73Q81ww==}
     dev: false
 
   /astro/1.4.7_sass@1.55.0:
