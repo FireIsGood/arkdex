@@ -1,8 +1,7 @@
 import { defineConfig } from "astro/config";
 import image from "@astrojs/image";
-
-// https://astro.build/config
 import svelte from "@astrojs/svelte";
+import compress from "astro-compress";
 
 // https://astro.build/config
 export default defineConfig({
@@ -13,5 +12,5 @@ export default defineConfig({
   trailingSlash: "ignore",
   integrations: [image({
     serviceEntryPoint: "@astrojs/image/sharp"
-  }), svelte()]
+  }), svelte(), compress()]
 });

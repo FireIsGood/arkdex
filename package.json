@@ -16,6 +16,7 @@
     "@swup/body-class-plugin": "^1.0.2",
     "@swup/scripts-plugin": "^1.1.0",
     "astro": "^1.4.7",
+    "astro-compress": "^1.0.11",
     "http-cache-semantics": "4.1.0",
     "image-size": "1.0.2",
     "mime": "3.0.0",
