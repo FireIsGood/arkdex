@@ -29,7 +29,10 @@
   }
 </script>
 
-<div class:hidden={!match && $searchTerm !== "?"} class:first={exactMatch}>
+<div
+  class:hidden={!match && $searchTerm !== "?"}
+  class:exact-match={exactMatch}
+>
   <li
     class:tiny-name={nameLength >= 12}
     class:small-name={12 > nameLength && nameLength >= 8}
@@ -114,6 +117,7 @@
     border-radius: 0.25rem;
     overflow: hidden;
     color: var(--theme-text-dark);
+    outline: 0 solid white;
 
     a {
       width: var(--grid-width);
@@ -131,7 +135,13 @@
     font-size: 0.5rem;
   }
 
-  .first {
+  .exact-match {
     order: -1;
+
+    li {
+      transition: box-shadow 150ms linear, outline 150ms linear;
+      box-shadow: inset 0 0 4px white;
+      outline: 2px solid white;
+    }
   }
 </style>
