@@ -93,22 +93,24 @@
   <div class="grid-items">
     <ul class="operator-grid">
       {#each operatorListFiltered as operator}
-        <a
-          href={`/arkdex/operators/${operator.slug}`}
-          class:tiny-name={operator.name.length >= 12}
-          class:small-name={12 > operator.name.length &&
-            operator.name.length >= 8}
-          class={`rarity-${operator.rarity + 1}`}
-          class:exact-match={trueMatch === operator.trueSlug}
-        >
-          <picture class="image">
-            {#each operator.image.sources as source}
-              <source {...source} />
-            {/each}
-            <img {...operator.image.image} alt="" />
-          </picture>
-          <p class="operator-name">{operator.name}</p>
-        </a>
+        <li>
+          <a
+            href={`/arkdex/operators/${operator.slug}`}
+            class:tiny-name={operator.name.length >= 12}
+            class:small-name={12 > operator.name.length &&
+              operator.name.length >= 8}
+            class={`rarity-${operator.rarity + 1}`}
+            class:exact-match={trueMatch === operator.trueSlug}
+          >
+            <picture class="image">
+              {#each operator.image.sources as source}
+                <source {...source} />
+              {/each}
+              <img {...operator.image.image} alt="" />
+            </picture>
+            <p class="operator-name">{operator.name}</p>
+          </a>
+        </li>
       {/each}
     </ul>
   </div>
