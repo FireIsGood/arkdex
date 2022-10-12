@@ -1,13 +1,12 @@
 ---
 import MainLayout from "@layouts/MainLayout.astro";
 import Search from "@components/search.svelte";
-import SearchItem from "@components/search-item.svelte";
 import type { Operator } from "@scripts/operatorTypes";
+import type { SearchItem } from "@scripts/searchTypes";
 import { removeSpace, toSlug } from "@scripts/slugGen";
-import { Image } from "@astrojs/image/components";
+import { getPicture } from "@astrojs/image";
 
-let operatorList = new Array();
-let operatorListSearchable = new Array();
+let operatorList: Array<SearchItem> = [];
 
 await fetch(
   "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/master/en_US/gamedata/excel/character_table.json"
@@ -26,30 +25,24 @@ await fetch(
         return {
           name: operator.name,
           slug: toSlug(operator.name),
-          imageLink: operator.phases[0].characterPrefabKey,
+          trueSlug: removeSpace(operator.name),
+          image: operator.phases[0].characterPrefabKey,
           rarity: operator.rarity,
         };
       })
       .sort((a, b) => a.name.localeCompare(b.name))
       .sort((a, b) => b.rarity - a.rarity);
-    operatorListSearchable = Object.entries(data)
-      .filter(([technicalName, data]) => {
-        const operator = data as Operator;
-        return (
-          operator.profession !== "TOKEN" && operator.profession !== "TRAP"
-        );
-      })
-      .map(([technicalName, data]) => {
-        const operator = data as Operator;
-        return {
-          trueSlug: removeSpace(operator.name),
-          slug: toSlug(operator.name),
-          rarity: operator.rarity,
-        };
-      })
-      .sort((a, b) => a?.slug.localeCompare(b?.slug))
-      .sort((a, b) => b.rarity - a.rarity);
   });
+
+for (let operator of operatorList) {
+  operator.image = await getPicture({
+    src: operator.image.toString(),
+    widths: [108],
+    formats: ["avif", "webp", "png"],
+    aspectRatio: "1:1",
+  });
+}
+console.log(operatorList[0].image);
 
 const title = `Arkdex ▪ Operators`;
 const ogTitle = `Arkdex Operator Listing Page`;
@@ -58,28 +51,7 @@ const ogTitle = `Arkdex Operator Listing Page`;
 <MainLayout title={title} ogTitle={ogTitle} alwaysScrollbar={true}>
   <section style="opacity: 0">
     <h1>Operators</h1>
-    <div>
-      <Search client:load operatorList={operatorListSearchable} />
-    </div>
-    <ul class="operator-grid">
-      {
-        operatorList.map((operator) => {
-          const img = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.imageLink}.png`;
-          return (
-            <SearchItem client:load {operator}>
-              <Image
-                src={img}
-                alt=""
-                format={"webp"}
-                width={108}
-                height={108}
-                class="image"
-              />
-            </SearchItem>
-          );
-        })
-      }
-    </ul>
+    <Search client:load operatorList={operatorList} />
   </section>
 </MainLayout>
 
@@ -100,21 +72,7 @@ const ogTitle = `Arkdex Operator Listing Page`;
     text-align: center;
   }
 
-  a {
-    text-decoration: none;
-  }
-
   // Main Styles
-
-  .operator-grid {
-    --grid-width: 4.5rem;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fit, var(--grid-width));
-    justify-content: center;
-    gap: 0.25rem;
-    align-content: center;
-  }
 
   .image {
     width: 100%;

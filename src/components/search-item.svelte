@@ -29,10 +29,7 @@
   }
 </script>
 
-<div
-  class:hidden={!match && $searchTerm !== "?"}
-  class:exact-match={exactMatch}
->
+<div class:exact-match={exactMatch}>
   <li
     class:tiny-name={nameLength >= 12}
     class:small-name={12 > nameLength && nameLength >= 8}
@@ -50,7 +47,7 @@
     display: none;
   }
 
-  // CSS Variables
+  // CSS Variables for Rarities
 
   :root {
     // Arkinghts Rarities
@@ -136,8 +133,6 @@
   }
 
   .exact-match {
-    order: -1;
-
     li {
       transition: box-shadow 150ms linear, outline 150ms linear;
       box-shadow: inset 0 0 4px white;

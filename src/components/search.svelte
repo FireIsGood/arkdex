@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { searchTerm } from "@components/search-store";
+  import type { SearchItem } from "@scripts/searchTypes";
   import { removeSpace } from "@scripts/slugGen";
   import { onMount } from "svelte";
 
@@ -12,7 +12,6 @@
   onMount(() => {
     if (!isTouchScreendevice()) {
       searchbar.focus();
-      console.log("This is a touch device");
     }
   });
 
@@ -34,101 +33,166 @@
     rick: rick,
   };
 
-  type OperatorSearch = {
-    slug: string;
-    trueSlug: string;
-  };
-
-  export let operatorList: Array<OperatorSearch>;
+  export let operatorList: Array<SearchItem> = [];
+  let operatorListFiltered: Array<SearchItem> = operatorList;
   let trueMatch: string = "";
   let linkToMatch: Element;
 
-  let input: string;
+  let input: string = "";
+  let selected: string = input;
 
   $: {
-    // Parse input
-    const cleanInput = input ? removeSpace(input) : "";
+    // Parse input (s for shorthand)
+    selected = removeSpace(input);
+    const s = selected;
 
-    if (cleanInput) {
-      searchTerm.set(cleanInput);
-
-      // List of operators that partially match
-      let queryMatch: Array<OperatorSearch> = operatorList.filter((item) => {
-        return (
-          item.trueSlug.slice(0, cleanInput.length) ===
-          cleanInput.slice(0, cleanInput.length)
-        );
-      });
-
-      // Get url for navigation, check for exact match, otherwise get first result
-      if (
-        operatorList.some((item) => {
-          return item.trueSlug === cleanInput;
-        })
-      ) {
-        const i = operatorList.findIndex(
-          (item) => item.trueSlug === cleanInput
-        );
-        trueMatch = operatorList[i].slug;
-      } else if (queryMatch.length > 0) {
-        trueMatch = queryMatch[0].slug;
-      } else {
-        trueMatch = "";
-      }
+    if (s) {
+      operatorListFiltered = operatorList
+        .filter(
+          (item) => item.trueSlug.slice(0, s.length) === s.slice(0, s.length)
+        )
+        .sort((a, b) => (a.trueSlug === s ? -1 : 1));
+      trueMatch = operatorListFiltered[0].slug;
     } else {
-      searchTerm.set("?");
+      operatorListFiltered = operatorList;
       trueMatch = "";
     }
+    operatorListFiltered.sort();
   }
 
-  // Handle enter to navigate and Ctrl+a backspace
   async function handleKeydown(event) {
-    if (event.key === "Enter") {
-      if (trueMatch) {
-        linkToMatch?.click();
-      }
-    }
-    if (event.key === "Backspace") {
-      searchTerm.set("?");
-      trueMatch = "";
+    if (event.key === "Enter" && trueMatch) {
+      linkToMatch?.click();
     }
   }
 </script>
 
 <div class="container">
-  <input
-    type="text"
-    placeholder="Search Operators"
-    autocomplete="false"
-    bind:value={input}
-    on:keydown={handleKeydown}
-    bind:this={searchbar}
-  />
-  <a
-    href={`/arkdex/operators/${trueMatch}`}
-    bind:this={linkToMatch}
-    class="secret"
-  >
-    /arkdex/operators/{trueMatch}
-  </a>
-  <div class:secret={!($searchTerm in secrets)}>
-    <div class="image">
-      <img src={secrets[$searchTerm]} alt="oh no" />
+  <div class="input-container">
+    <input
+      type="text"
+      placeholder="Search Operators"
+      autocomplete="false"
+      bind:value={input}
+      on:keydown={handleKeydown}
+      bind:this={searchbar}
+    />
+    <a href={`/arkdex/operators/${trueMatch}`} bind:this={linkToMatch} class="">
+      /arkdex/operators/{trueMatch}
+    </a>
+    <div class:secret={!(selected in secrets)}>
+      <div class="secret-image">
+        <img src={secrets[selected]} alt="oh no" />
+      </div>
     </div>
+  </div>
+  <div class="grid-items">
+    <ul class="operator-grid">
+      {#each operatorListFiltered as operator}
+        <li
+          class:tiny-name={operator.name.length >= 12}
+          class:small-name={12 > operator.name.length &&
+            operator.name.length >= 8}
+          class={`rarity-${operator.rarity + 1}`}
+          class:exact-match={trueMatch === operator.trueSlug}
+        >
+          <a href={`/arkdex/operators/${operator.slug}`}>
+            <img {...operator.image.image} alt="" />
+            <p class="operator-name">{operator.name}</p>
+          </a>
+        </li>
+      {/each}
+    </ul>
   </div>
 </div>
 
 <style lang="scss">
   .container {
+    > * + * {
+      margin-top: 1rem;
+    }
+  }
+
+  // CSS Variables
+
+  :root {
+    // Arkinghts Rarities
+
+    --color-rarity-1: linear-gradient(
+      0deg,
+      rgb(148, 148, 148) 0%,
+      hsl(66, 0%, 74%) 80%,
+      hsl(63, 0%, 67%) 100%
+    );
+    --color-rarity-2: linear-gradient(
+      0deg,
+      hsl(63, 62%, 55%) 0%,
+      hsl(66, 74%, 74%) 80%,
+      hsl(63, 88%, 67%) 100%
+    );
+    --color-rarity-3: linear-gradient(
+      0deg,
+      hsl(195, 62%, 55%) 0%,
+      hsl(198, 74%, 74%) 80%,
+      hsl(195, 88%, 67%) 100%
+    );
+    --color-rarity-4: linear-gradient(
+      0deg,
+      hsl(287, 39%, 76%) 0%,
+      hsl(256, 47%, 81%) 80%,
+      hsl(268, 53%, 86%) 100%
+    );
+    --color-rarity-5: linear-gradient(
+      0deg,
+      hsl(51, 81%, 55%) 0%,
+      hsl(46, 67%, 75%) 80%,
+      hsl(59, 68%, 60%) 100%
+    );
+    --color-rarity-6: linear-gradient(
+      0deg,
+      hsl(27, 76%, 63%) 0%,
+      hsl(40, 82%, 67%) 72%,
+      hsl(38, 84%, 65%) 100%
+    );
+  }
+
+  @for $rarity from 1 through 6 {
+    .rarity-#{$rarity} {
+      background: var(--color-rarity-#{$rarity});
+    }
+  }
+
+  // General Styles
+
+  input {
+    font-size: 1.5em;
+    width: clamp(14rem, 40%, 40rem);
+    margin-inline: auto;
+    padding: 0.25rem;
+    text-align: center;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  // Main Styles
+
+  .input-container {
+    margin-top: 1rem;
     display: flex;
-    align-items: center;
-    flex-direction: column;
+    flex-flow: column wrap;
+    gap: 0.5rem;
+    place-content: center;
+    justify-content: center;
+    text-align: center;
   }
 
   .secret {
     display: none;
   }
-  .image {
+
+  .secret-image {
     padding-top: 1rem;
     width: max(8rem, 25%);
     margin-inline: auto;
@@ -139,10 +203,45 @@
     }
   }
 
-  input {
-    font-size: 1.5em;
-    width: clamp(14rem, 40%, 40rem);
-    padding: 0.25rem;
+  .operator-grid {
+    --grid-width: 4.5rem;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, var(--grid-width));
+    justify-content: center;
+    gap: 0.25rem;
+    align-content: center;
+  }
+
+  li {
+    margin: 0;
+    width: var(--grid-width);
     text-align: center;
+    word-wrap: break-word;
+    border-radius: 0.25rem;
+    overflow: hidden;
+    color: var(--theme-text-dark);
+    outline: 0 solid white;
+
+    a {
+      width: var(--grid-width);
+      height: calc(var(--grid-width) + 1.5rem);
+
+      display: grid;
+      place-items: center;
+    }
+  }
+
+  .small-name {
+    font-size: 0.8rem;
+  }
+  .tiny-name {
+    font-size: 0.5rem;
+  }
+
+  .exact-match {
+    transition: box-shadow 150ms linear, outline 150ms linear;
+    box-shadow: inset 0 0 4px white;
+    outline: 2px solid white;
   }
 </style>
