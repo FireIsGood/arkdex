@@ -97,7 +97,11 @@
           class:exact-match={trueMatch === operator.trueSlug}
         >
           <a href={`/arkdex/operators/${operator.slug}`}>
-            <img {...operator.image.image} alt="" />
+            <div class="image">
+              <picture>
+                <img {...operator.image.image} alt="" />
+              </picture>
+            </div>
             <p class="operator-name">{operator.name}</p>
           </a>
         </li>
@@ -172,8 +176,15 @@
     text-align: center;
   }
 
-  a {
+  a,
+  a:visited {
     text-decoration: none;
+    color: var(--theme-text);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
   }
 
   // Main Styles
