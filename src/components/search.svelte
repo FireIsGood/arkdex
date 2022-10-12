@@ -1,6 +1,13 @@
 <script lang="ts">
   import { searchTerm } from "@components/search-store";
   import { removeSpace } from "@scripts/slugGen";
+  import { onMount } from "svelte";
+
+  let searchbar: Element;
+
+  onMount(() => {
+    searchbar.focus();
+  });
 
   import amogus from "../assets/amogus.gif?url";
   import lappdumb from "../assets/lappdumb.png?url";
@@ -85,6 +92,7 @@
     autocomplete="false"
     bind:value={input}
     on:keydown={handleKeydown}
+    bind:this={searchbar}
   />
   <a
     href={`/arkdex/operators/${trueMatch}`}
