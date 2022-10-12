@@ -4,9 +4,10 @@
   import { onMount } from "svelte";
 
   let searchbar: Element;
+  let isTouch = "ontouchstart" in document.documentElement;
 
   onMount(() => {
-    searchbar.focus();
+    if (isTouch) searchbar.focus();
   });
 
   import amogus from "../assets/amogus.gif?url";
