@@ -5,18 +5,22 @@ import { SEO } from "astro-seo";
 
 export interface Props {
   title: string;
+  ogTitle: string;
   padding?: boolean;
   ogImg?: string;
+  ogImgAlt?: string;
   ogDesc?: string;
   alwaysScrollbar?: boolean;
 }
 
-const { title, padding, ogImg, ogDesc, alwaysScrollbar } = Astro.props;
+const { title, ogTitle, padding, ogImg, ogImgAlt, ogDesc, alwaysScrollbar } =
+  Astro.props;
 
 let mainClass = padding === true || padding === undefined ? "pad" : "";
 mainClass += " transition-fade";
-const opegGraphImg = ogImg ? ogImg : "/arkdex/assets/logo_rhodes_bg.png";
-const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
+const ogImgCleaned = ogImg ? ogImg : "/arkdex/assets/logo_rhodes_bg.png";
+const ogImgAltCleaned = ogImgAlt ? ogImgAlt : "Rhodes Island Logo";
+const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 ---
 
 <html lang="en">
@@ -56,12 +60,15 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
     <!-- HTML Meta Tags -->
     <SEO
       title={title}
-      description={description}
+      description={ogDescCleaned}
       openGraph={{
         basic: {
-          title: title,
+          title: ogTitle,
           type: "article",
-          image: opegGraphImg,
+          image: ogImgCleaned,
+        },
+        image: {
+          alt: ogImgAltCleaned,
         },
         optional: {
           locale: "en_US",

@@ -50,9 +50,12 @@ await fetch(
       .sort((a, b) => a?.slug.localeCompare(b?.slug))
       .sort((a, b) => b.rarity - a.rarity);
   });
+
+const title = `Arkdex ▪ Operators`;
+const ogTitle = `Arkdex Operator Listing Page`;
 ---
 
-<MainLayout title="Arkdex ▪ Operators" alwaysScrollbar={true}>
+<MainLayout title={title} ogTitle={ogTitle} alwaysScrollbar={true}>
   <section style="opacity: 0">
     <h1>Operators</h1>
     <div>

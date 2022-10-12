@@ -39,8 +39,10 @@ const { slug } = Astro.params;
 const { technicalName, operator } = Astro.props as Props;
 
 const title = `Arkdex ▪ ${operator.name}`;
+const ogTitle = `Arkdex Page For ${operator.name}`;
 const operatorPhaseCount = operator.phases.length - 1;
 const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
+const operatorImgAlt = `${operator.name} Image`;
 const operatorFaction =
   operator.teamId !== null
     ? operator.teamId
@@ -53,8 +55,10 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
 
 <MainLayout
   title={title}
+  ogTitle={ogTitle}
   padding={false}
   ogImg={operatorAvatar}
+  ogImgAlt={operatorImgAlt}
   ogDesc={operator.itemUsage}
 >
   <section style="opacity: 0">
