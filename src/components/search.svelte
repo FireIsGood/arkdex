@@ -2,6 +2,7 @@
   import type { SearchItem } from "@scripts/searchTypes";
   import { removeSpace } from "@scripts/slugGen";
   import { onMount } from "svelte";
+  import levenshtein from "js-levenshtein";
 
   // Auto focus on Desktop
   let searchbar: Element;
@@ -40,6 +41,7 @@
 
   let input: string = "";
   let selected: string = input;
+  let showAll: boolean = false;
 
   $: {
     // Parse input (s for shorthand)
@@ -51,8 +53,11 @@
         .filter(
           (item) => item.trueSlug.slice(0, s.length) === s.slice(0, s.length)
         )
-        .sort((a, b) => (a.trueSlug === s ? -1 : 1));
-      trueMatch = operatorListFiltered[0].trueSlug ?? "";
+        .sort((a, b) => levenshtein(s, a.trueSlug) - levenshtein(s, b.trueSlug))
+        .sort((a, b) => b.rarity - a.rarity)
+        .sort((a, b) => (a.trueSlug === s ? -1 : 1))
+        .slice(0, showAll ? undefined : 10);
+      trueMatch = operatorListFiltered[0]?.trueSlug ?? "";
     } else {
       operatorListFiltered = operatorList;
       trueMatch = "";
