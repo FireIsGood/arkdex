@@ -4,10 +4,15 @@
   import { onMount } from "svelte";
 
   let searchbar: Element;
-  let isTouch = "ontouchstart" in document.documentElement;
+  function isTouchScreendevice() {
+    return "ontouchstart" in window || navigator.maxTouchPoints;
+  }
 
   onMount(() => {
-    if (isTouch) searchbar.focus();
+    if (!isTouchScreendevice()) {
+      searchbar.focus();
+      console.log("This is a touch device");
+    }
   });
 
   import amogus from "../assets/amogus.gif?url";
