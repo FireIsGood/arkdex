@@ -133,7 +133,7 @@
   </div>
   {#if operatorListShown < operatorListFiltered}
     <button on:click={revealRest} class="show-more"
-      >Show {fullLength - 10} more?</button
+      >Show {fullLength - 10} More</button
     >
   {/if}
 </div>
