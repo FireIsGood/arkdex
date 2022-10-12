@@ -89,25 +89,22 @@
   <div class="grid-items">
     <ul class="operator-grid">
       {#each operatorListFiltered as operator}
-        <li
+        <a
+          href={`/arkdex/operators/${operator.slug}`}
           class:tiny-name={operator.name.length >= 12}
           class:small-name={12 > operator.name.length &&
             operator.name.length >= 8}
           class={`rarity-${operator.rarity + 1}`}
           class:exact-match={trueMatch === operator.trueSlug}
         >
-          <a href={`/arkdex/operators/${operator.slug}`}>
-            <div class="image">
-              <picture>
-                {#each operator.image.sources as source}
-                  <source {...source} />
-                {/each}
-                <img {...operator.image.image} alt="" />
-              </picture>
-            </div>
-            <p class="operator-name">{operator.name}</p>
-          </a>
-        </li>
+          <picture class="image">
+            {#each operator.image.sources as source}
+              <source {...source} />
+            {/each}
+            <img {...operator.image.image} alt="" />
+          </picture>
+          <p class="operator-name">{operator.name}</p>
+        </a>
       {/each}
     </ul>
   </div>
@@ -185,6 +182,7 @@
     color: var(--theme-text);
   }
 
+  .image,
   img {
     width: 100%;
     height: 100%;
@@ -227,23 +225,18 @@
     align-content: center;
   }
 
-  li {
+  a {
     margin: 0;
     width: var(--grid-width);
+    height: calc(var(--grid-width) + 1.5rem);
     text-align: center;
     word-wrap: break-word;
     border-radius: 0.25rem;
     overflow: hidden;
     color: var(--theme-text-dark);
     outline: 0 solid white;
-
-    a {
-      width: var(--grid-width);
-      height: calc(var(--grid-width) + 1.5rem);
-
-      display: grid;
-      place-items: center;
-    }
+    display: grid;
+    place-items: center;
   }
 
   .small-name {
