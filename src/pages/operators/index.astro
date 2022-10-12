@@ -26,7 +26,7 @@ await fetch(
           name: operator.name,
           slug: toSlug(operator.name),
           trueSlug: removeSpace(operator.name),
-          image: operator.phases[0].characterPrefabKey,
+          image: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.phases[0].characterPrefabKey}.png`,
           rarity: operator.rarity,
         };
       })
