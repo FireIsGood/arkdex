@@ -10,7 +10,11 @@ export default defineConfig({
   site: "https://fireisgood.github.io/",
   base: "/arkdex",
   trailingSlash: "ignore",
-  integrations: [image({
-    serviceEntryPoint: "@astrojs/image/sharp"
-  }), svelte(), compress()]
+  integrations: [
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+    }),
+    svelte(),
+    compress(),
+  ],
 });
