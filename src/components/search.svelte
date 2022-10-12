@@ -99,6 +99,9 @@
           <a href={`/arkdex/operators/${operator.slug}`}>
             <div class="image">
               <picture>
+                {#each operator.image.sources as source}
+                  <source {...source} />
+                {/each}
                 <img {...operator.image.image} alt="" />
               </picture>
             </div>
