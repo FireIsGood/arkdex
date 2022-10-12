@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@astrojs/image': ^0.9.3
+  '@astrojs/partytown': ^1.0.1
   '@astrojs/svelte': ^1.0.1
   '@swup/a11y-plugin': ^2.1.0
   '@swup/body-class-plugin': ^1.0.2
@@ -26,6 +27,7 @@ specifiers:
 
 dependencies:
   '@astrojs/image': 0.9.3_sharp@0.31.1
+  '@astrojs/partytown': 1.0.1
   '@astrojs/svelte': 1.0.1_hnvm5kdxo5iewkgkojesgqujbi
   '@swup/body-class-plugin': 1.0.2
   '@swup/scripts-plugin': 1.1.0
@@ -151,6 +153,13 @@ packages:
       micromark-util-types: 1.0.2
       uvu: 0.5.6
       vfile-message: 3.1.2
+    dev: false
+
+  /@astrojs/partytown/1.0.1:
+    resolution: {integrity: sha512-JVmKwQa2aWMAmz3tkNHtg5hw7gOTI6ROyFIYcUQtN6j8aysEiWKnt4xzz67RvDWId1h7sIde87UeH+4YoEyGug==}
+    dependencies:
+      '@builder.io/partytown': 0.7.1
+      mrmime: 1.0.1
     dev: false
 
   /@astrojs/prism/1.0.1:
@@ -438,6 +447,11 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+    dev: false
+
+  /@builder.io/partytown/0.7.1:
+    resolution: {integrity: sha512-hvu2gG9NDtCa5aoL4JkvDe3E5SegXlHAkhtA+Az96uTtFA0PYuEPjDYGiayGTkZuRKUmxetebWjIFgSDNdlBOw==}
+    hasBin: true
     dev: false
 
   /@emmetio/abbreviation/2.2.3:
