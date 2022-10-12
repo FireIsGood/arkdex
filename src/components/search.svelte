@@ -32,8 +32,9 @@
 
   $: {
     // Parse input
-    if (input) {
-      const cleanInput = removeSpace(input);
+    const cleanInput = input ? removeSpace(input) : "";
+
+    if (cleanInput) {
       searchTerm.set(cleanInput);
 
       // List of operators that partially match
@@ -53,13 +54,14 @@
           (item) => item.trueSlug === cleanInput
         );
         trueMatch = operatorList[i].slug;
-      } else if (queryMatch) {
-        trueMatch = queryMatch[0]?.slug;
+      } else if (queryMatch.length > 0) {
+        trueMatch = queryMatch[0].slug;
       } else {
         trueMatch = "";
       }
     } else {
       searchTerm.set("?");
+      trueMatch = "";
     }
   }
 
@@ -71,6 +73,7 @@
     }
     if (event.key === "Backspace") {
       searchTerm.set("?");
+      trueMatch = "";
     }
   }
 </script>

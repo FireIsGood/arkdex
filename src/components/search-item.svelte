@@ -21,21 +21,22 @@
     const s = $searchTerm;
 
     // Check if search exists
+
     if (s && s !== "?") {
-      match = s.slice(0, s.length) === slug.slice(0, s.length);
-      exactMatch = s === slug ? true : false;
+      match = s.slice(0, s.length) === trueSlug.slice(0, s.length);
     }
+    exactMatch = s === trueSlug ? true : false;
   }
 </script>
 
-<div class:hidden={!match && $searchTerm !== "?"}>
+<div class:hidden={!match && $searchTerm !== "?"} class:first={exactMatch}>
   <li
     class:tiny-name={nameLength >= 12}
     class:small-name={12 > nameLength && nameLength >= 8}
     class={`rarity-${operator.rarity + 1}`}
   >
     <a href={url}>
-        <slot />
+      <slot />
       <p class="operator-name">{operator.name}</p>
     </a>
   </li>
@@ -128,5 +129,9 @@
   }
   .tiny-name {
     font-size: 0.5rem;
+  }
+
+  .first {
+    order: -1;
   }
 </style>
