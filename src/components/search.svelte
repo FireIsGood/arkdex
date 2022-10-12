@@ -3,6 +3,7 @@
   import { removeSpace } from "@scripts/slugGen";
   import { onMount } from "svelte";
 
+  // Auto focus on Desktop
   let searchbar: Element;
   function isTouchScreendevice() {
     return "ontouchstart" in window || navigator.maxTouchPoints;
@@ -15,6 +16,7 @@
     }
   });
 
+  // Secret image on specific search query
   import amogus from "../assets/amogus.gif?url";
   import lappdumb from "../assets/lappdumb.png?url";
   import sheew from "../assets/sheew.webp?url";
@@ -58,6 +60,7 @@
         );
       });
 
+      // Get url for navigation, check for exact match, otherwise get first result
       if (
         operatorList.some((item) => {
           return item.trueSlug === cleanInput;
@@ -78,6 +81,7 @@
     }
   }
 
+  // Handle enter to navigate and Ctrl+a backspace
   async function handleKeydown(event) {
     if (event.key === "Enter") {
       if (trueMatch) {
