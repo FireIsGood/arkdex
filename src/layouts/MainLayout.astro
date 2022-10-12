@@ -1,5 +1,6 @@
 ---
 import { Image } from "@astrojs/image/components";
+import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 
 export interface Props {
   title: string;
@@ -24,11 +25,8 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <!-- Preload Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
-      rel="stylesheet"
+    <GoogleFontsOptimizer
+      url="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
     />
     <!-- Swup -->
     <script>
@@ -66,7 +64,6 @@ const description = ogDesc ? ogDesc : "Arkinghts Operator Listing";
     <meta property="og:site_name" content="Arkdex" />
     <!-- Styles -->
     <style lang="scss" is:global>
-
       // General Styles
 
       *,
