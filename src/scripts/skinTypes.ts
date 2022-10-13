@@ -11,6 +11,7 @@ export interface SkinTable {
 
 export interface CharEvolve {
   "0": string;
+  "1"?: string;
   "2"?: string;
 }
 
