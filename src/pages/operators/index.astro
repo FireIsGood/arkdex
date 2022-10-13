@@ -7,6 +7,8 @@ import type { SearchItem } from "@scripts/searchTypes";
 import { removeSpace, toSlug } from "@scripts/slugGen";
 import { getPicture } from "@astrojs/image";
 
+// Get operator data
+
 let operatorList: Array<SearchItem> = [];
 
 await fetch(
