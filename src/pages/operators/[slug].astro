@@ -3,9 +3,20 @@ import MainLayout from "@layouts/MainLayout.astro";
 import type { Operator } from "@scripts/operatorTypes";
 import { toSlug } from "@scripts/slugGen";
 import { Image } from "@astrojs/image/components";
+import type { CharEvolve, CharSkin, FilteredSkins, SkinTable } from "@scripts/skinTypes";
+import { filterObjectsBySubValue } from "@scripts/helperFunc";
 
 export async function getStaticPaths() {
   let operatorList = new Array();
+  let skinList: SkinTable;
+
+  await fetch(
+    "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/master/en_US/gamedata/excel/skin_table.json"
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      skinList = data;
+    });
   await fetch(
     "https://raw.githubusercontent.com/Kengxxiao/ArknightsGameData/master/en_US/gamedata/excel/character_table.json"
   )
@@ -20,9 +31,15 @@ export async function getStaticPaths() {
         })
         .map(([technicalName, data]) => {
           const operator = data as Operator;
+          const elites = skinList.buildinEvolveMap[technicalName];
+          const skins = filterObjectsBySubValue(
+            skinList.charSkins,
+            "charId",
+            technicalName
+          );
           return {
             params: { slug: toSlug(operator.name) },
-            props: { technicalName, operator },
+            props: { technicalName, operator, elites, skins },
           };
         });
     });
@@ -30,13 +47,17 @@ export async function getStaticPaths() {
   return operatorList;
 }
 
+// Get skin data
+
 interface Props {
   technicalName: string;
   operator: Operator;
+  elites: CharEvolve;
+  skins: FilteredSkins;
 }
 
 const { slug } = Astro.params;
-const { technicalName, operator } = Astro.props as Props;
+const { technicalName, operator, elites, skins } = Astro.props as Props;
 
 const title = `Arkdex ▪ ${operator.name}`;
 const ogTitle = `Arkdex Page For ${operator.name}`;
@@ -144,6 +165,23 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
     <div class="column-stats">
       <h1>{operator.name}</h1>
       <p>{technicalName} {slug}</p>
+      <ul>
+        {
+          Object.entries(elites).map(([key, value]) => {
+            return (
+              <li>
+                {key}: {value}
+              </li>
+            );
+          })
+        }
+        {
+          Object.entries(skins).map(([key, value]) => {
+            const skin = value as CharSkin;
+            return <li>{skin.avatarId}</li>;
+          })
+        }
+      </ul>
       <ul class="tag-list">
         {
           Object.entries(operator.tagList).map((tag) => {
