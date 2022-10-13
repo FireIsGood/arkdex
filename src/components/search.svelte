@@ -109,7 +109,7 @@
   </div>
   <div class="grid-items">
     <ul class="operator-grid">
-      {#each operatorListShown as operator}
+      {#each selected ? operatorListShown : operatorList as operator}
         <li>
           <a
             href={`/arkdex/operators/${operator.slug}`}
