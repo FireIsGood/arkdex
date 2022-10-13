@@ -50,7 +50,7 @@ const ogTitle = `Arkdex Operator Listing Page`;
 <MainLayout title={title} ogTitle={ogTitle} alwaysScrollbar={true}>
   <section style="opacity: 0">
     <h1>Operators</h1>
-    <Search client:load operatorList={operatorList} />
+    <Search client:idle operatorList={operatorList} />
   </section>
 </MainLayout>
 
