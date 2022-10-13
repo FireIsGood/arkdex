@@ -10,18 +10,18 @@ export function filterObjectsBySubValue(object: any, subValue: string, desiredVa
   return output
 }
 
-let list = {
-  wow: {
-    name: "wow!",
-    number: 1
-  },
-  sus: {
-    name: "suspicious"
-  },
-  hah: {
-    name: "wow!"
-  }
-}
+// let list = {
+//   wow: {
+//     name: "wow!",
+//     number: 1
+//   },
+//   sus: {
+//     name: "suspicious"
+//   },
+//   hah: {
+//     name: "wow!"
+//   }
+// }
 
-let res = filterObjectsBySubValue(list, "name", "wow!")
-res
+// let res = filterObjectsBySubValue(list, "name", "wow!")
+// res
