@@ -2,7 +2,7 @@
 import MainLayout from "@layouts/MainLayout.astro";
 // @ts-expect-error svelte typescript jank
 import Search from "@components/search.svelte";
-import type { Operator } from "@scripts/operatorTypes";
+import type { OperatorTypes } from "@scripts/operatorTypes";
 import type { SearchItem } from "@scripts/searchTypes";
 import { removeSpace, toSlug } from "@scripts/slugGen";
 import { getPicture } from "@astrojs/image";
@@ -18,13 +18,13 @@ await fetch(
   .then((data) => {
     operatorList = Object.entries(data)
       .filter(([technicalName, data]) => {
-        const operator = data as Operator;
+        const operator = data as OperatorTypes;
         return (
           operator.profession !== "TOKEN" && operator.profession !== "TRAP"
         );
       })
       .map(([technicalName, data]) => {
-        const operator = data as Operator;
+        const operator = data as OperatorTypes;
         return {
           name: operator.name,
           slug: toSlug(operator.name),
@@ -47,7 +47,7 @@ for (let operator of operatorList) {
 }
 
 const title = `Arkdex ▪ Operators`;
-const ogTitle = `Arkdex Operator Listing Page`;
+const ogTitle = `Arkdex OperatorTypes Listing Page`;
 ---
 
 <MainLayout title={title} ogTitle={ogTitle} alwaysScrollbar={true}>

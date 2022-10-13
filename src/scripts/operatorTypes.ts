@@ -1,4 +1,4 @@
-export interface Operator {
+export interface OperatorTypes {
   name:                       string;
   description:                string;
   canUseGeneralPotentialItem: boolean;

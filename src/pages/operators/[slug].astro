@@ -1,6 +1,6 @@
 ---
 import MainLayout from "@layouts/MainLayout.astro";
-import type { Operator } from "@scripts/operatorTypes";
+import type { OperatorTypes } from "@scripts/operatorTypes";
 import { toSlug } from "@scripts/slugGen";
 import { Image } from "@astrojs/image/components";
 import type { CharEvolve, CharSkin, FilteredSkins, SkinTable } from "@scripts/skinTypes";
@@ -24,13 +24,13 @@ export async function getStaticPaths() {
     .then((data) => {
       operatorList = Object.entries(data)
         .filter(([technicalName, data]) => {
-          const operator = data as Operator;
+          const operator = data as OperatorTypes;
           return (
             operator.profession !== "TOKEN" && operator.profession !== "TRAP"
           );
         })
         .map(([technicalName, data]) => {
-          const operator = data as Operator;
+          const operator = data as OperatorTypes;
           const elites = skinList.buildinEvolveMap[technicalName];
           const skins = filterObjectsBySubValue(
             skinList.charSkins,
@@ -51,7 +51,7 @@ export async function getStaticPaths() {
 
 interface Props {
   technicalName: string;
-  operator: Operator;
+  operator: OperatorTypes;
   elites: CharEvolve;
   skins: FilteredSkins;
 }
