@@ -2,11 +2,27 @@
 import MainLayout from "@layouts/MainLayout.astro";
 import type { OperatorTypes } from "@scripts/operatorTypes";
 import { toSlug } from "@scripts/slugGen";
-import { Image } from "@astrojs/image/components";
-import type { CharEvolve, CharSkin, FilteredSkins, SkinTable } from "@scripts/skinTypes";
 import { filterObjectsBySubValue } from "@scripts/helperFunc";
+import { getPicture } from "@astrojs/image";
+import type { FilteredSkins, SkinTable } from "@scripts/skinTypes";
+import Operator from "@components/operator.svelte";
+import type { GetPictureResult } from "@astrojs/image/dist/lib/get-picture";
+
+interface Elites {
+  [key: string]: GetPictureResult;
+}
 
 export async function getStaticPaths() {
+  let eliteImages: Elites = {};
+  for (let elite of ["0", "1", "2"]) {
+    eliteImages[elite] = await getPicture({
+      src: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/${elite}-s.png`,
+      widths: [72],
+      aspectRatio: "1:1",
+      formats: ["avif", "webp"],
+    });
+  }
+
   let operatorList = new Array();
   let skinList: SkinTable;
 
@@ -31,12 +47,22 @@ export async function getStaticPaths() {
         })
         .map(([technicalName, data]) => {
           const operator = data as OperatorTypes;
-          const elites = skinList.buildinEvolveMap[technicalName];
+
+          // Get elite levels as an object with key as the level and value as the getPicture output
+          let elites: Elites = {};
+          for (let num of Object.keys(
+            skinList.buildinEvolveMap[technicalName]
+          )) {
+            elites[num] = eliteImages[num];
+          }
+
           const skins = filterObjectsBySubValue(
             skinList.charSkins,
             "charId",
             technicalName
           );
+
+          const images = {};
           return {
             params: { slug: toSlug(operator.name) },
             props: { technicalName, operator, elites, skins },
@@ -52,7 +78,7 @@ export async function getStaticPaths() {
 interface Props {
   technicalName: string;
   operator: OperatorTypes;
-  elites: CharEvolve;
+  elites: GetPictureResult[];
   skins: FilteredSkins;
 }
 
@@ -61,16 +87,7 @@ const { technicalName, operator, elites, skins } = Astro.props as Props;
 
 const title = `Arkdex ▪ ${operator.name}`;
 const ogTitle = `Arkdex Page For ${operator.name}`;
-const operatorPhaseCount = operator.phases.length - 1;
-const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
 const operatorImgAlt = `${operator.name} Image`;
-const operatorFaction =
-  operator.teamId !== null
-    ? operator.teamId
-    : operator.groupId !== null
-    ? operator.groupId
-    : operator.nationId;
-const operatorFactionImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/factions/logo_${operatorFaction}.png`;
 const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/avatars/${operator.phases[0].characterPrefabKey}.png`;
 ---
 
@@ -82,312 +99,13 @@ const operatorAvatar = `https://raw.githubusercontent.com/Aceship/Arknight-Image
   ogImgAlt={operatorImgAlt}
   ogDesc={operator.itemUsage}
 >
-  <section style="opacity: 0">
-    <a href="/arkdex/operators" class="back">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        height="48"
-        width="48"
-        fill="white"
-        class="shadow"
-      >
-        <path
-          d="M24 40.65 7.4 24 24 7.4l2.6 2.6-12.2 12.2h26.25v3.65H14.4l12.2 12.2Z"
-        >
-        </path>
-      </svg>
-    </a>
-    <div class="column-image">
-      <ul class="image-toolbar">
-        <ul>
-          {
-            operatorPhaseCount >= 2 ? (
-              <li>
-                <button class="elite-icon" title="Switch to elite 2">
-                  <img src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/2-s.png" />
-                </button>
-              </li>
-            ) : null
-          }
-          {
-            operatorPhaseCount >= 1 ? (
-              <li>
-                <button class="elite-icon" title="Switch to elite 1">
-                  <img src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/1-s.png" />
-                </button>
-              </li>
-            ) : null
-          }
-          {
-            operatorPhaseCount >= 0 ? (
-              <li>
-                <button class="elite-icon" title="Switch to elite 0">
-                  <img src="https://raw.githubusercontent.com/Aceship/Arknight-Images/main/ui/elite/0-s.png" />
-                </button>
-              </li>
-            ) : null
-          }
-        </ul>
-        <ul>
-          <li class="section-top">
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="36"
-                width="36"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  d="m40.05 42.6-13.2-13.2q-1.55 1.3-3.65 2-2.1.7-4.35.7-5.7 0-9.6-3.9-3.9-3.9-3.9-9.5t3.9-9.5q3.9-3.9 9.5-3.9t9.5 3.9q3.9 3.9 3.9 9.5 0 2.2-.675 4.225Q30.8 24.95 29.4 26.75l13.3 13.2ZM18.8 28.45q4.05 0 6.875-2.85t2.825-6.9q0-4.05-2.825-6.9Q22.85 8.95 18.8 8.95q-4.15 0-6.975 2.85Q9 14.65 9 18.7q0 4.05 2.825 6.9 2.825 2.85 6.975 2.85Zm-1.9-3.8v-4.2h-4.2V16.8h4.2v-4.15h3.65v4.15h4.15v3.65h-4.15v4.2Z"
-                >
-                </path>
-              </svg>
-            </button>
-          </li>
-        </ul>
-      </ul>
-      <img src={operatorImg} alt={operatorImg} class="operatorImg" />
-      {
-        operatorFaction ? (
-          <Image
-            src={operatorFactionImg}
-            alt={operatorFactionImg}
-            format={"png"}
-            width={180}
-            height={180}
-            class="factionImg"
-          />
-        ) : null
-      }
-
-      <div class="backdrop"></div>
-    </div>
-    <div class="column-stats">
-      <h1>{operator.name}</h1>
-      <p>{technicalName} {slug}</p>
-      <ul>
-        {
-          Object.entries(elites).map(([key, value]) => {
-            return (
-              <li>
-                {key}: {value}
-              </li>
-            );
-          })
-        }
-        {
-          Object.entries(skins).map(([key, value]) => {
-            const skin = value as CharSkin;
-            return <li>{skin.avatarId}</li>;
-          })
-        }
-      </ul>
-      <ul class="tag-list">
-        {
-          Object.entries(operator.tagList).map((tag) => {
-            return <li class="tag">{tag[1]}</li>;
-          })
-        }
-      </ul>
-      <p>Max elite: {operatorPhaseCount}</p>
-      <p>
-        <span class="key-label">Attack at e0 max:</span>
-        {operator.phases[0].attributesKeyFrames[1].data.atk}
-      </p>
-      {
-        Object.entries(operator).map(([key, value]) => {
-          return (
-            <p>
-              <span class="key-label">{key}:</span>{" "}
-              {JSON.stringify(value, null, 2)}
-            </p>
-          );
-        })
-      }
-    </div>
-  </section>
+  <Operator
+    client:idle
+    technicalName={technicalName}
+    operator={operator}
+    elites={elites}
+    skins={skins}
+  />
 </MainLayout>
 
-<style lang="scss">
-  // Fix FOUC
-
-  section {
-    opacity: 1 !important;
-  }
-
-  // General Styles
-
-  h1 {
-    text-align: center;
-    font-size: 2em;
-  }
-
-  // Main Styles
-
-  section {
-    display: flex;
-    flex-direction: column;
-
-    > div {
-      width: 100%;
-      min-width: 300px;
-    }
-  }
-
-  a.back {
-    z-index: 4;
-    position: absolute;
-
-    svg {
-      display: block;
-      fill: var(--theme-button);
-    }
-
-    &:hover svg {
-      fill: var(--theme-button-hover);
-    }
-
-    &:active svg {
-      fill: var(--theme-button-active);
-    }
-  }
-
-  .column-image {
-    position: relative;
-    display: grid;
-    height: 100%;
-    place-self: center;
-    place-items: center;
-
-    .image-toolbar {
-      grid-area: 1 / 1;
-      z-index: 2;
-      justify-self: left;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-
-      ul {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-        background-color: var(--theme-button-gap);
-      }
-
-      li {
-        display: flex;
-      }
-
-      button {
-        cursor: pointer;
-        width: 2.75rem;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        transition: background-color 150ms ease, background-size 250ms ease-out;
-        background-color: var(--theme-button);
-        background-image: linear-gradient(var(--theme-card) 0 0);
-        background-repeat: no-repeat;
-        background-size: 0% 2px;
-        background-position: 0% calc(100% - 2px);
-
-        &.elite-icon {
-          height: 1.75rem;
-        }
-
-        img {
-          pointer-events: none;
-          height: 100%;
-        }
-
-        &:hover {
-          background-size: 30% 2px;
-          background-color: var(--theme-button-hover);
-        }
-        &:active {
-          background-color: var(--theme-button-active);
-        }
-      }
-    }
-
-    .operatorImg {
-      grid-area: 1 / 1;
-      z-index: 1;
-      position: relative;
-      width: 100%;
-      max-width: 600px;
-    }
-
-    .factionImg {
-      grid-area: 1 / 1;
-      z-index: 0;
-      position: relative;
-      place-self: flex-start;
-      left: 1.5rem;
-      top: 1rem;
-      width: 30%;
-      -webkit-filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
-      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
-      object-fit: contain;
-    }
-
-    .backdrop {
-      grid-area: 1 / 1;
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-    }
-  }
-
-  .column-stats {
-    padding: 1rem;
-    background-color: var(--theme-card);
-
-    .tag-list {
-      list-style: none;
-      display: flex;
-      gap: 0.25rem;
-
-      li.tag {
-        display: inline-block;
-        padding: 0.15rem 0.35rem;
-        border-radius: 0.25rem;
-        background-color: var(--theme-tag);
-        color: var(--theme-tag-text);
-      }
-    }
-
-    > * + * {
-      margin-top: 1rem;
-    }
-  }
-
-  .key-label {
-    color: var(--theme-text-accent);
-  }
-
-  // Media query for Desktop
-
-  @media (min-width: 750px) {
-    body {
-      overflow: hidden;
-    }
-    section {
-      flex-direction: row;
-
-      > div {
-        width: 50%;
-      }
-    }
-
-    .column-stats {
-      max-height: calc(100vh - var(--header-height));
-      overflow-y: scroll;
-    }
-
-    .backdrop {
-      display: none;
-    }
-  }
-</style>
+<style lang="scss"></style>
