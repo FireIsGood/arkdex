@@ -124,6 +124,11 @@
     border-radius: 0;
   }
 
+  :global(picture *) {
+    pointer-events: none;
+    user-select: none;
+  }
+
   // Utility Styles
 
   .hidden {
@@ -203,7 +208,6 @@
         }
 
         &:hover {
-          background-size: 30% 2px;
           background-color: var(--theme-button-hover);
         }
         &:active {
