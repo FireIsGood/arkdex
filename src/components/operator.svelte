@@ -4,11 +4,13 @@
   import type { CharEvolve, FilteredSkins } from "@scripts/skinTypes";
   import type { GetPictureResult } from "@astrojs/image/dist/lib/get-picture";
   import { each } from "svelte/internal";
+  import type { Images, PictureObjects } from "@scripts/pagePropTypes";
 
   export let technicalName: string;
   export let operator: OperatorTypes;
-  export let elites: GetPictureResult[];
+  export let elites: PictureObjects;
   export let skins: FilteredSkins;
+  export let images: Images;
 
   const operatorPhaseCount = operator.phases.length - 1;
   const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
@@ -62,14 +64,25 @@
         </li>
       </ul>
     </div>
-    <img src={operatorImg} alt={operatorImg} class="operatorImg" />
+    <div class="operator-image">
+      {#each Object.keys(images.character) as character}
+        <div class:hidden={character !== shownSkin}>
+          <Picture picture={images.character[character]} />
+        </div>
+      {/each}
+    </div>
     <div class="backdrop" />
-    <img src="" alt="" class="factionImg" />
+    <div class="faction-image">
+      <Picture picture={images.faction} />
+    </div>
   </div>
   <div class="column-stats">
     <h1>{operator.name}</h1>
     <p>{technicalName}</p>
     <p>showing skin: {shownSkin}</p>
+    {#each Object.entries(images) as [key, image]}
+      <p>{key}: {image}</p>
+    {/each}
     <ul class="tag-list">
       {#each operator.tagList as tag}
         <li class="tag">{tag}</li>
@@ -108,6 +121,12 @@
 
   button {
     border-radius: 0;
+  }
+
+  // Utility Styles
+
+  .hidden {
+    display: none;
   }
 
   // Main Styles
@@ -192,7 +211,7 @@
       }
     }
 
-    .operatorImg {
+    .operator-image {
       grid-area: 1 / 1;
       z-index: 1;
       width: 100%;
@@ -200,7 +219,7 @@
       object-fit: contain;
     }
 
-    .factionImg {
+    .faction-image {
       grid-area: 1 / 1;
       z-index: 0;
       position: relative;
