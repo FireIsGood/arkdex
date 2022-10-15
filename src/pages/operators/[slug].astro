@@ -108,7 +108,9 @@ export async function getStaticPaths() {
         ? operator.groupId
         : operator.nationId;
     item.props.images.faction = await getPicture({
-      src: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/factions/logo_${operatorFaction}.png`,
+      src: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/factions/${
+        operatorFaction ? `logo_${operatorFaction}` : "none"
+      }.png`,
       widths: [180],
       aspectRatio: "1:1",
       formats: ["avif", "webp", "png"],
