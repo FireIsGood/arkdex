@@ -48,7 +48,9 @@ export async function getStaticPaths() {
         .filter(([technicalName, data]) => {
           const operator = data as OperatorTypes;
           return (
-            operator.profession !== "TOKEN" && operator.profession !== "TRAP"
+            operator.profession !== "TOKEN" &&
+            operator.profession !== "TRAP" &&
+            technicalName !== "char_512_aprot"
           );
         })
         .map(([technicalName, data]) => {
