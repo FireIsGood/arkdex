@@ -40,6 +40,7 @@
             <button
               on:click={() => (shownSkin = elite)}
               class="elite-icon"
+              aria-selected={shownSkin === elite}
               title={`Switch to elite ${elite}`}
             >
               <Picture {picture} />
@@ -207,6 +208,10 @@
         }
         &:active {
           background-color: var(--theme-button-active);
+        }
+        &[aria-selected="true"] {
+          background-size: 30% 2px;
+          box-shadow: inset 0 0 4px white;
         }
       }
     }
