@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Picture from "./picture.svelte";
   import type { OperatorTypes } from "@scripts/operatorTypes";
   import type { CharEvolve, FilteredSkins } from "@scripts/skinTypes";
   import type { GetPictureResult } from "@astrojs/image/dist/lib/get-picture";
@@ -9,17 +10,10 @@
   export let elites: GetPictureResult[];
   export let skins: FilteredSkins;
 
-  console.log(skins);
-
   const operatorPhaseCount = operator.phases.length - 1;
   const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
-  const operatorFaction =
-    operator.teamId !== null
-      ? operator.teamId
-      : operator.groupId !== null
-      ? operator.groupId
-      : operator.nationId;
-  const operatorFactionImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/factions/logo_${operatorFaction}.png`;
+
+  let shownSkin: String = "0";
 </script>
 
 <section>
@@ -41,13 +35,12 @@
       <ul class="elite-icons">
         {#each Object.entries(elites) as [elite, picture]}
           <li>
-            <button class="elite-icon" title={`Switch to elite ${elite}`}>
-              <picture>
-                {#each picture.sources as source}
-                  <source srcset={source.srcset} />
-                {/each}
-                <img {...picture.image} alt="" />
-              </picture>
+            <button
+              on:click={() => (shownSkin = elite)}
+              class="elite-icon"
+              title={`Switch to elite ${elite}`}
+            >
+              <Picture {picture} />
             </button>
           </li>
         {/each}
@@ -76,12 +69,16 @@
   <div class="column-stats">
     <h1>{operator.name}</h1>
     <p>{technicalName}</p>
-    {#each Object.entries(skins) as [skinId, skin]}
-      <p>{skin.skinId}</p>
-    {/each}
-    <ul>
-      <li>Test location for skin imports</li>
+    <p>showing skin: {shownSkin}</p>
+    <ul class="tag-list">
+      {#each operator.tagList as tag}
+        <li class="tag">{tag}</li>
+      {/each}
     </ul>
+    <ul />
+    {#each Object.entries(skins) as [skinId, skin]}
+      <p>{skinId} {skin.avatarId}</p>
+    {/each}
     <p>Max elite: {operatorPhaseCount}</p>
     <p>
       <span class="key-label">Attack at e0 max:</span>
@@ -183,16 +180,6 @@
           height: 2rem;
           width: 3rem;
           padding: 0rem 0.5rem;
-        }
-
-        picture {
-          pointer-events: none;
-
-          > * {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-          }
         }
 
         &:hover {

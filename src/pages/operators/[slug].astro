@@ -23,7 +23,12 @@ export async function getStaticPaths() {
     });
   }
 
-  let operatorList = new Array();
+  interface OperatorList {
+    params: string;
+    props: Props;
+  }
+
+  let operatorList: OperatorList[] = new Array();
   let skinList: SkinTable;
 
   await fetch(
@@ -62,28 +67,58 @@ export async function getStaticPaths() {
             technicalName
           );
 
-          const images = {};
+          const images: Images = {
+            character: null,
+            faction: null,
+          };
           return {
             params: { slug: toSlug(operator.name) },
-            props: { technicalName, operator, elites, skins },
+            props: { technicalName, operator, elites, skins, images },
           };
         });
     });
 
+  for (let item of operatorList) {
+    const operator = item.props.operator;
+    // Get character image
+    item.props.images.character = {};
+
+    const operatorFaction =
+      operator.teamId !== null
+        ? operator.teamId
+        : operator.groupId !== null
+        ? operator.groupId
+        : operator.nationId;
+    item.props.images.faction = await getPicture({
+      src: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/factions/logo_${operatorFaction}.png`,
+      widths: [180],
+      aspectRatio: "1:1",
+      formats: ["avif", "webp", "png"],
+    });
+  }
+
   return operatorList;
 }
-
-// Get skin data
 
 interface Props {
   technicalName: string;
   operator: OperatorTypes;
   elites: GetPictureResult[];
   skins: FilteredSkins;
+  images: Images;
+}
+
+interface Images {
+  character: PictureObjects | null;
+  faction: GetPictureResult | null;
+}
+
+interface PictureObjects {
+  [key: string]: GetPictureResult;
 }
 
 const { slug } = Astro.params;
-const { technicalName, operator, elites, skins } = Astro.props as Props;
+const { technicalName, operator, elites, skins, images } = Astro.props as Props;
 
 const title = `Arkdex ▪ ${operator.name}`;
 const ogTitle = `Arkdex Page For ${operator.name}`;
