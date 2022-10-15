@@ -124,7 +124,7 @@
     border-radius: 0;
   }
 
-  :global(picture *) {
+  :global(picture) {
     pointer-events: none;
     user-select: none;
   }
@@ -293,12 +293,16 @@
       overflow-y: auto;
     }
 
-    .operatorImg {
-      height: calc(100vh - var(--header-height));
-    }
-
     .backdrop {
       display: none;
+    }
+  }
+
+  // Media query for short screen 
+
+  @media (max-height: 550px) {
+    :global(.operator-image div) {
+      height: calc(100vh - var(--header-height));
     }
   }
 </style>
