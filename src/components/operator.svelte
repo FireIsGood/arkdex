@@ -16,6 +16,11 @@
   const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
 
   let shownSkin: String = "0";
+
+  function openFullPortrait(e: Event) {
+    e.preventDefault();
+    alert("This will open the operator full image modal");
+  }
 </script>
 
 <section>
@@ -50,7 +55,7 @@
       </ul>
       <ul>
         <li class="section-top">
-          <button title="View full image">
+          <button title="View full image" on:click={openFullPortrait}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="36"
@@ -65,7 +70,7 @@
         </li>
       </ul>
     </div>
-    <div class="operator-image">
+    <div class="operator-image" on:contextmenu={openFullPortrait}>
       {#each Object.keys(images.character) as character}
         <div class:hidden={character !== shownSkin}>
           <Picture picture={images.character[character]} />
@@ -75,7 +80,8 @@
     <div class="backdrop" />
     <div class="faction-image">
       {#if images.faction}
-      <Picture picture={images.faction} />
+        <Picture picture={images.faction} />
+      {/if}
     </div>
   </div>
   <div class="column-stats">
@@ -299,7 +305,7 @@
     }
   }
 
-  // Media query for short screen 
+  // Media query for short screen
 
   @media (max-height: 550px) {
     :global(.operator-image div) {
