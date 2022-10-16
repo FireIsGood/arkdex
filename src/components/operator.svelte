@@ -74,6 +74,7 @@
     </div>
     <div class="backdrop" />
     <div class="faction-image">
+      {#if images.faction}
       <Picture picture={images.faction} />
     </div>
   </div>
