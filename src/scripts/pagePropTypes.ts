@@ -15,8 +15,13 @@ export interface Props {
 }
 
 export interface Images {
-  character: { [index: string]: GetPictureResult | String };
+  character: { [index: string]: CharacterImage };
   faction: GetPictureResult | null;
+}
+
+export interface CharacterImage {
+  optimal: GetPictureResult;
+  original: String;
 }
 
 export interface PictureObjects {

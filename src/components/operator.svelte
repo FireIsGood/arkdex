@@ -5,6 +5,7 @@
   import type { GetPictureResult } from "@astrojs/image/dist/lib/get-picture";
   import { each } from "svelte/internal";
   import type { Images, PictureObjects } from "@scripts/pagePropTypes";
+  import { fly } from "svelte/transition";
 
   export let technicalName: string;
   export let operator: OperatorTypes;
@@ -16,10 +17,19 @@
   const operatorImg = `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${technicalName}_1.png`;
 
   let shownSkin: String = "0";
+  let modalActive: Boolean = false;
+  let modalName: String = "";
 
   function openFullPortrait(e: Event) {
     e.preventDefault();
-    alert("This will open the operator full image modal");
+    modalActive = true;
+    modalName = "full image";
+  }
+
+  async function handleKeydown(event) {
+    if (event.key === "Escape") {
+      modalActive = false;
+    }
   }
 </script>
 
@@ -37,10 +47,10 @@
       />
     </svg>
   </a>
-  <div class="column-image">
+  <div class="column-image" data-elite={shownSkin}>
     <div class="image-toolbar">
       <ul class="elite-icons">
-        {#each Object.entries(elites) as [elite, picture]}
+        {#each Object.entries(elites).reverse() as [elite, picture], i}
           <li>
             <button
               on:click={() => (shownSkin = elite)}
@@ -73,7 +83,7 @@
     <div class="operator-image" on:contextmenu={openFullPortrait}>
       {#each Object.keys(images.character) as character}
         <div class:hidden={character !== shownSkin}>
-          <Picture picture={images.character[character]} />
+          <Picture picture={images.character[character].optimal} />
         </div>
       {/each}
     </div>
@@ -87,6 +97,7 @@
   <div class="column-stats">
     <h1>{operator.name}</h1>
     <p>{technicalName}</p>
+    <p>{modalActive}</p>
     <p>showing skin: {shownSkin}</p>
     {#each Object.entries(images) as [key, image]}
       <p>{key}: {image}</p>
@@ -107,6 +118,23 @@
     </p>
   </div>
 </section>
+
+{#if modalActive}
+  <div class="modals">
+    {#if modalName === "full image"}
+      <div class="full-image" in:fly={{ y: 10, duration: 200 }}>
+        <img src={images.character[shownSkin].original} alt="Full Character" />
+      </div>
+    {/if}
+    <div
+      class="modal-background"
+      on:click={() => (modalActive = false)}
+      on:keydown={handleKeydown}
+    />
+  </div>
+{/if}
+
+<svelte:body on:keydown={handleKeydown} />
 
 <style lang="scss">
   // General Styles
@@ -134,6 +162,11 @@
   :global(picture) {
     pointer-events: none;
     user-select: none;
+  }
+
+  img {
+    width: 100%;
+    object-fit: cover;
   }
 
   // Utility Styles
@@ -169,6 +202,19 @@
     place-self: center;
     place-items: center;
 
+    background-image: radial-gradient(var(--theme-dots) 10%, transparent 10%);
+    background-size: 2.5vmin 2.5vmin;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    transition: background-position 250ms ease;
+
+    @for $elite from 0 through 2 {
+      &[data-elite="#{$elite}"] {
+        background-position-y: calc(50% + (-5% * #{$elite}));
+        background-position-x: calc(50% + (-1% * #{$elite}));
+      }
+    }
+
     .image-toolbar {
       grid-area: 1 / 1;
       z-index: 2;
@@ -187,10 +233,6 @@
 
       li {
         display: flex;
-      }
-
-      .elite-icons {
-        flex-direction: column-reverse;
       }
 
       button {
@@ -243,8 +285,8 @@
       left: 1.5rem;
       top: 1rem;
       width: 30%;
-      -webkit-filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
-      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+      -webkit-filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.7));
+      filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.7));
       object-fit: contain;
     }
 
@@ -283,6 +325,37 @@
     color: var(--theme-text-accent);
   }
 
+  .modals {
+    z-index: 10;
+    position: absolute;
+    display: grid;
+    inset: 0;
+
+    .full-image {
+      grid-area: 1 / 1;
+      z-index: 1;
+      width: clamp(300px, 50vw, 600px);
+      height: clamp(300px, 50vw, 600px);
+      background-color: var(--theme-modal);
+      margin: auto;
+      padding: 1rem;
+      display: flex;
+      place-items: center;
+    }
+
+    .modal-background {
+      grid-area: 1 / 1;
+      z-index: 0;
+      position: absolute;
+      background-color: rgba(0, 0, 0, 0.3);
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      // filter: blur(10px);
+    }
+  }
+
   // Media query for Desktop
 
   @media (min-width: 750px) {
@@ -291,12 +364,13 @@
 
       > div {
         width: 50%;
+        height: var(--body-height);
       }
     }
 
     .column-image,
     .column-stats {
-      max-height: calc(100vh - var(--header-height));
+      height: var(--body-height);
       overflow-y: auto;
     }
 
@@ -309,7 +383,7 @@
 
   @media (max-height: 550px) {
     :global(.operator-image div) {
-      height: calc(100vh - var(--header-height));
+      height: var(--body-height);
     }
   }
 </style>

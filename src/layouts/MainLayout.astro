@@ -178,6 +178,7 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 
         --theme-bg: hsl(var(--color-base-main), 95%);
         --theme-main: hsl(var(--color-base-main), 80%);
+        --theme-dots: hsl(var(--color-base-main), 60%);
         --theme-card: hsl(var(--color-base-main), 88%);
 
         --theme-text: hsl(var(--color-base-main), 10%);
@@ -200,7 +201,10 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         --theme-search-border: hsl(var(--color-base-main), 50%);
         --theme-search-border-focus: hsl(var(--color-base-main), 40%);
 
+        --theme-modal: hsl(var(--color-base-main), 70%);
+
         --header-height: 3.75rem;
+        --body-height: calc(100vh - var(--header-height) - 1px);
       }
 
       // Main Styles
@@ -292,7 +296,7 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       }
 
       main {
-        position: relative;
+        // position: relative;
         max-width: 75rem;
         min-height: calc(100vh - var(--header-height) - 1px);
         margin-inline: auto;
