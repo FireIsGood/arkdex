@@ -2,6 +2,16 @@
 
 Arknights operator viewer made with [Astro](https://astro.build) made by FireIsGood#0733
 
+## TODO
+
+- Skin viewing
+- Mobile nav menu
+- Dark Mode
+- The Operator right side column
+- Profile
+- Audio
+- Landing Page
+
 ## To run
 
 ```bash
