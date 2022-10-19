@@ -264,7 +264,6 @@
         }
         &[aria-selected="true"] {
           background-size: 30% 2px;
-          box-shadow: inset 0 0 4px white;
         }
       }
     }
