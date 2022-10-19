@@ -334,8 +334,8 @@
     .full-image {
       grid-area: 1 / 1;
       z-index: 1;
-      width: clamp(300px, 50vw, 600px);
-      height: clamp(300px, 50vw, 600px);
+      width: 100vmin;
+      aspect-ratio: 1 / 1;
       background-color: var(--theme-modal);
       margin: auto;
       padding: 1rem;
@@ -352,7 +352,6 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      // filter: blur(10px);
     }
   }
 
@@ -374,16 +373,16 @@
       overflow-y: auto;
     }
 
-    .backdrop {
-      display: none;
-    }
-  }
-
-  // Media query for short screen
-
-  @media (max-height: 550px) {
     :global(.operator-image div) {
       height: var(--body-height);
+    }
+
+    .modals .full-image {
+      width: min(75vw, 75vh, 100vmin);
+    }
+
+    .backdrop {
+      display: none;
     }
   }
 </style>
