@@ -1,4 +1,5 @@
 ---
+import NavLinks from "@components/navLinks.svelte";
 import { Image } from "@astrojs/image/components";
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
 import { SEO } from "astro-seo";
@@ -169,7 +170,7 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
 
         // Light mode
         --theme-header: hsl(var(--color-base-accent), 32%);
-        --theme-header-button: hsl(var(--color-base-accent), 32%);
+        --theme-header-button: hsl(var(--color-base-accent), 42%);
         --theme-header-button-hover: hsl(var(--color-base-accent), 40%);
         --theme-header-button-active: hsl(var(--color-base-accent), 38%);
         --theme-header-button-gap: hsl(var(--color-base-accent), 30%);
@@ -258,16 +259,6 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         nav {
           display: flex;
 
-          button {
-            height: var(--header-height);
-            width: var(--header-height);
-            align-self: center;
-            justify-content: center;
-            align-items: center;
-            display: none;
-            background-color: transparent;
-          }
-
           .nav-links {
             display: flex;
             flex-direction: row;
@@ -281,7 +272,6 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
               font-size: 1.25rem;
               padding: 0.5rem;
               border-radius: 0.5rem;
-              background-color: var(--theme-header-button);
 
               &:hover {
                 background-color: var(--theme-header-button-hover);
@@ -348,41 +338,22 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         header {
           nav {
             position: relative;
-            flex-direction: column;
-
-            &:hover,
-            &:focus-within {
-              button {
-                background-color: var(--theme-button-hover);
-                pointer-events: none;
-
-                &:active {
-                  background-color: var(--theme-button-active);
-                }
-
-                & + .nav-links {
-                  display: block;
-                  height: auto;
-                }
-              }
-            }
-
-            button {
-              display: flex;
-            }
 
             .nav-links {
-              display: none;
               position: absolute;
+              flex-direction: column;
+              gap: 0;
               right: 0;
               top: 100%;
               margin: 0;
               overflow: hidden;
-              height: 0%;
               transition: height 250ms ease;
               box-shadow: 0 2px 2px rgba($color: #000000, $alpha: 0.25);
 
               > li {
+                width: 100%;
+
+                background-color: var(--theme-header-button);
                 a {
                   padding: 0.5rem 1rem;
                   font-size: 1.75rem;
@@ -417,21 +388,14 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         </a>
       </div>
       <nav>
-        <button aria-label="View Navigation">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="36"
-            width="36"
-            viewBox="0 0 48 48"
-            fill="white"
-          >
-            <path d="M6 36v-3h36v3Zm0-10.5v-3h36v3ZM6 15v-3h36v3Z"></path>
-          </svg>
-        </button>
-        <ul class="nav-links">
-          <li><a href="/arkdex" title="Home Page" class="backlink">Home</a></li>
-          <li><a href="/arkdex/operators" class="backlink">Operators</a></li>
-        </ul>
+        <NavLinks client:idle>
+          <ul class="nav-links">
+            <li>
+              <a href="/arkdex" title="Home Page" class="backlink">Home</a>
+            </li>
+            <li><a href="/arkdex/operators" class="backlink">Operators</a></li>
+          </ul>
+        </NavLinks>
       </nav>
     </header>
     <main id="main">

@@ -5,7 +5,6 @@ Arknights operator viewer made with [Astro](https://astro.build) made by FireIsG
 ## TODO
 
 - Skin viewing
-- Mobile nav menu
 - Dark Mode
 - The Operator right side column
 - Profile
