@@ -64,12 +64,14 @@ export async function getStaticPaths() {
             elites[num] = eliteImages[num];
           }
 
+          // Get all skins associated with an operator as a CharSkin (@scripts/skinTypes.ts)
           const skins: any = filterObjectsBySubValue(
             skinList.charSkins,
             "charId",
             technicalName
           );
 
+          // Set up images object to be written to (const because it is returned)
           const images: Images = {
             character: {},
             faction: null,
@@ -81,8 +83,6 @@ export async function getStaticPaths() {
         });
     });
 
-
-  
   // Assign images to operator
   for (let item of operatorList) {
     const operator = item.props.operator;
@@ -98,13 +98,13 @@ export async function getStaticPaths() {
         ].portraitId;
       item.props.images.character[elite] = {
         optimal: await getPicture({
-        src: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${file}.png`,
-        widths: [600],
-        aspectRatio: "1:1",
-        formats: ["avif", "webp", "png"],
-      }),
-        original: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${file}.png`
-      }
+          src: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${file}.png`,
+          widths: [600],
+          aspectRatio: "1:1",
+          formats: ["avif", "webp", "png"],
+        }),
+        original: `https://raw.githubusercontent.com/Aceship/Arknight-Images/main/characters/${file}.png`,
+      };
     }
 
     const operatorFaction =
