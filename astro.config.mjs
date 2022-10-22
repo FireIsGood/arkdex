@@ -14,6 +14,7 @@ export default defineConfig({
   base: "/arkdex",
   trailingSlash: "ignore",
   integrations: [image({
-    serviceEntryPoint: "@astrojs/image/sharp"
+    serviceEntryPoint: "@astrojs/image/sharp",
+    cacheDir: "./.cache/image",
   }), svelte(), compress(), partytown()]
 });
