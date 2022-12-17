@@ -46,11 +46,10 @@
   let fullLength: number;
 
   $: {
-    // Parse input (s for shorthand)
-    selected = removeSpace(input);
-    const s = selected;
+    if (input !== "") {
+      selected = removeSpace(input);
+      const s = selected;
 
-    if (s) {
       operatorListFiltered = operatorList
         .filter(
           (item) => item.trueSlug.slice(0, s.length) === s.slice(0, s.length)
@@ -58,15 +57,10 @@
         .sort((a, b) => b.rarity - a.rarity)
         .sort((a, b) => (a.trueSlug === s ? -1 : 1));
       fullLength = operatorListFiltered.length;
-      operatorListShown = operatorListFiltered.slice(
-        0,
-        showAll ? undefined : 10
-      );
 
       trueMatch = operatorListFiltered[0]?.trueSlug ?? "";
     } else {
       operatorListFiltered = operatorList;
-      operatorListShown = operatorListFiltered;
       trueMatch = "";
       showAll = false;
     }
@@ -109,8 +103,8 @@
   </div>
   <div class="grid-items">
     <ul class="operator-grid">
-      {#each selected ? operatorListShown : operatorList as operator (operator.slug)}
-        <li>
+      {#each operatorList as operator (operator.slug)}
+        <li class:secret={!operatorListFiltered.includes(operator)}>
           <a
             href={`/arkdex/operators/${operator.slug}`}
             class:tiny-name={operator.name.length >= 12}
