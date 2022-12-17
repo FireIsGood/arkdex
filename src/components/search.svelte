@@ -2,6 +2,7 @@
   import type { SearchItem } from "@scripts/searchTypes";
   import { removeSpace } from "@scripts/slugGen";
   import { onMount } from "svelte";
+  import miniSearch from "minisearch"
 
   // Auto focus on Desktop
   let searchbar: Element;
@@ -96,6 +97,7 @@
       href={`/arkdex/operators/${trueMatch}`}
       bind:this={linkToMatch}
       class="secret"
+      tabindex="-1"
     >
       /arkdex/operators/{trueMatch}
     </a>
@@ -270,6 +272,11 @@
     outline: 0 solid white;
     display: grid;
     place-items: center;
+
+    &:focus {
+      transition: box-shadow 150ms linear, outline 150ms linear;
+      outline: 3px solid #eeeeee;
+    }
   }
 
   .small-name {
@@ -280,9 +287,12 @@
   }
 
   .exact-match {
-    transition: box-shadow 150ms linear, outline 150ms linear;
     box-shadow: inset 0 0 4px white;
     outline: 2px solid white;
+
+    &:focus {
+      outline: 3px solid white;
+    }
   }
 
   .show-more {
