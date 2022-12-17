@@ -42,7 +42,6 @@
 
   let input: string = "";
   let selected: string = input;
-  let showAll: boolean = false;
   let fullLength: number;
 
   $: {
@@ -56,13 +55,11 @@
         )
         .sort((a, b) => b.rarity - a.rarity)
         .sort((a, b) => (a.trueSlug === s ? -1 : 1));
-      fullLength = operatorListFiltered.length;
 
       trueMatch = operatorListFiltered[0]?.trueSlug ?? "";
     } else {
       operatorListFiltered = operatorList;
       trueMatch = "";
-      showAll = false;
     }
   }
 
@@ -125,11 +122,6 @@
       {/each}
     </ul>
   </div>
-  {#if operatorListShown < operatorListFiltered}
-    <button on:click={revealRest} class="show-more"
-      >Show {fullLength - 10} More</button
-    >
-  {/if}
 </div>
 
 <style lang="scss">
