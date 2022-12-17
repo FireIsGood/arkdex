@@ -137,7 +137,7 @@
   // CSS Variables
 
   :root {
-    // Arkinghts Rarities
+    // Arknights Rarities
 
     --color-rarity-1: linear-gradient(
       0deg,
