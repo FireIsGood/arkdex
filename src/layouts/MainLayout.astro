@@ -11,14 +11,11 @@ export interface Props {
   ogImg?: string;
   ogImgAlt?: string;
   ogDesc?: string;
-  alwaysScrollbar?: boolean;
 }
 
-const { title, ogTitle, padding, ogImg, ogImgAlt, ogDesc, alwaysScrollbar } =
-  Astro.props;
+const { title, ogTitle, padding, ogImg, ogImgAlt, ogDesc } = Astro.props;
 
-let mainClass = padding === true || padding === undefined ? "pad" : "";
-mainClass += " transition-fade";
+const mainClass = padding === true || padding === undefined ? "pad" : "";
 const ogImgCleaned = ogImg ? ogImg : "/arkdex/assets/logo_rhodes_bg.png";
 const ogImgAltCleaned = ogImgAlt ? ogImgAlt : "Rhodes Island Logo";
 const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
@@ -104,6 +101,7 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       body {
         background-color: var(--theme-bg);
         color: var(--theme-text);
+        overflow: hidden;
       }
 
       img {
@@ -205,7 +203,8 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         --theme-modal: hsl(var(--color-base-main), 70%);
 
         --header-height: 3.75rem;
-        --body-height: calc(100vh - var(--header-height) - 1px);
+        --body-height: calc(100vh - var(--header-height));
+        --body-width: 75rem;
       }
 
       // Main Styles
@@ -286,33 +285,24 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       }
 
       main {
-        // position: relative;
-        max-width: 75rem;
-        min-height: calc(100vh - var(--header-height) - 1px);
-        margin-inline: auto;
-        background-color: var(--theme-main);
-        box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.4);
+        height: var(--body-height);
+        scrollbar-gutter: stable both-edges;
+        overflow-y: auto;
 
         &[tabindex="-1"] {
           outline: none;
         }
       }
 
-      .transition-fade {
-        transition: 50ms ease-out;
-        opacity: 1;
-      }
-
-      html.is-animating .transition-fade {
-        opacity: 0;
+      article {
+        max-width: var(--body-width);
+        background-color: var(--theme-main);
+        margin-inline: auto;
+        box-shadow: 0 0 2px rgba($color: #000000, $alpha: 0.4);
       }
 
       .pad {
         padding: 1rem;
-      }
-
-      .always-scroll {
-        overflow-y: scroll;
       }
 
       // Acessability
@@ -368,9 +358,16 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
           }
         }
       }
+
+      // Can't use css variables, so update this if the body width changes
+      @media (max-width: calc(75rem + 2.5rem)) {
+        main {
+          scrollbar-gutter: unset;
+        }
+      } ;
     </style>
   </head>
-  <body class={alwaysScrollbar === true ? " always-scroll" : ""}>
+  <body>
     <a href="#main" class="skip-main">Skip to main content</a>
     <header>
       <div class="logo">
@@ -399,9 +396,9 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
       </nav>
     </header>
     <main id="main">
-      <div id="swup" class={mainClass}>
+      <article id="swup" class={mainClass}>
         <slot />
-      </div>
+      </article>
     </main>
   </body>
 </html>
