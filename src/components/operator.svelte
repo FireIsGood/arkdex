@@ -80,13 +80,13 @@
         </li>
       </ul>
     </div>
-    <div class="operator-image" on:contextmenu={openFullPortrait}>
+    <ul class="operator-image" on:contextmenu={openFullPortrait}>
       {#each Object.keys(images.character) as character}
-        <div class:hidden={character !== shownSkin}>
+        <li class:hidden={character !== shownSkin}>
           <Picture picture={images.character[character].optimal} />
-        </div>
+        </li>
       {/each}
-    </div>
+    </ul>
     <div class="backdrop" />
     <div class="faction-image">
       {#if images.faction}
@@ -142,7 +142,6 @@
   section {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - var(--header-height) - 1px);
 
     > div {
       width: 100%;
@@ -202,7 +201,10 @@
     place-self: center;
     place-items: center;
 
-    background-image: radial-gradient(var(--theme-dots) 10%, transparent 10%);
+    background-image: radial-gradient(
+      var(--theme-dots) 0.25vmin,
+      transparent 0.25vmin
+    );
     background-size: 2.5vmin 2.5vmin;
     background-position-x: 50%;
     background-position-y: 50%;
@@ -210,8 +212,7 @@
 
     @for $elite from 0 through 2 {
       &[data-elite="#{$elite}"] {
-        background-position-y: calc(50% + (-5% * #{$elite}));
-        background-position-x: calc(50% + (-1% * #{$elite}));
+        background-position-y: calc(50% + (-1% * #{$elite}));
       }
     }
 
@@ -238,11 +239,10 @@
       button {
         display: flex;
         place-items: center;
-        cursor: pointer;
         width: 100%;
-        padding: 0;
-        display: flex;
         justify-content: center;
+        padding: 0;
+
         transition: background-color 150ms ease, background-size 250ms ease-out;
         background-color: var(--theme-button);
         background-image: linear-gradient(var(--theme-card) 0 0);
@@ -264,6 +264,7 @@
         }
         &[aria-selected="true"] {
           background-size: 30% 2px;
+          left: 10px;
         }
       }
     }
@@ -274,6 +275,12 @@
       width: 100%;
       max-width: 600px;
       object-fit: contain;
+
+      display: grid;
+
+      > li {
+        grid-area: 1 / 1;
+      }
     }
 
     .faction-image {
