@@ -73,7 +73,7 @@
   }
 </script>
 
-<div class="container">
+<section class="container">
   <div class="input-container">
     <input
       type="text"
@@ -121,7 +121,7 @@
       {/each}
     </ul>
   </div>
-</div>
+</section>
 
 <style lang="scss">
   .container {
