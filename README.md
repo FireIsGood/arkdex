@@ -14,7 +14,7 @@ Arknights operator viewer made with [Astro](https://astro.build) made by FireIsG
 ## To run
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Runs on port 3000
@@ -22,7 +22,7 @@ Runs on port 3000
 ## To build
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 Creates files to `/docs` folder for github pages. NOTE: DEPLOYS TO /arkdex
