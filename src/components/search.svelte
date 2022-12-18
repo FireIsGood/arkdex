@@ -2,7 +2,6 @@
   import type { SearchItem } from "@scripts/searchTypes";
   import { removeSpace } from "@scripts/slugGen";
   import { onMount } from "svelte";
-  import miniSearch from "minisearch"
 
   // Auto focus on Desktop
   let searchbar: Element;
