@@ -206,7 +206,6 @@
       transparent 0.25vmin
     );
     background-size: 2.5vmin 2.5vmin;
-    background-position-x: 50%;
     background-position-y: 50%;
     transition: background-position 250ms ease;
 
