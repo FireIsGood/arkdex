@@ -18,7 +18,6 @@ const { title, ogTitle, padding, ogImg, ogImgAlt, ogDesc, alwaysScrollbar } =
   Astro.props;
 
 let mainClass = padding === true || padding === undefined ? "pad" : "";
-mainClass += " transition-fade";
 const ogImgCleaned = ogImg ? ogImg : "/arkdex/assets/logo_rhodes_bg.png";
 const ogImgAltCleaned = ogImgAlt ? ogImgAlt : "Rhodes Island Logo";
 const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
@@ -34,30 +33,6 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
     <GoogleFontsOptimizer
       url="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
     />
-    <!-- Swup -->
-    <script>
-      import Swup from "swup";
-      import SwupA11yPlugin from "@swup/a11y-plugin";
-      import SwupHeadPlugin from "@swup/head-plugin";
-      import SwupScrollPlugin from "@swup/scroll-plugin";
-      import SwupBodyClassPlugin from "@swup/body-class-plugin";
-      import SwupScriptsPlugin from "@swup/scripts-plugin";
-
-      const options = {
-        doScrollingRightAway: true,
-        animateScroll: false,
-        shouldResetScrollPosition: (link: any) => !link.matches(".backlink"),
-        plugins: [
-          new SwupHeadPlugin(),
-          new SwupA11yPlugin(),
-          new SwupScrollPlugin(),
-          new SwupBodyClassPlugin(),
-          new SwupScriptsPlugin(),
-        ],
-      };
-
-      const swup = new Swup(options);
-    </script>
     <!-- HTML Meta Tags -->
     <SEO
       title={title}
@@ -398,10 +373,8 @@ const ogDescCleaned = ogDesc ? ogDesc : "Arkinghts Operator Listing";
         </NavLinks>
       </nav>
     </header>
-    <main id="main">
-      <div id="swup" class={mainClass}>
-        <slot />
-      </div>
+    <main id="main" class={mainClass}>
+      <slot />
     </main>
   </body>
 </html>
